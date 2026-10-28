@@ -8,6 +8,8 @@ import json
 import numpy as np
 import torch
 from PIL import Image
+import subprocess
+import signal
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
@@ -16,9 +18,47 @@ SAM_CHECKPOINT = "/mnt/nvme/models/sam2/sam2.1_hiera_tiny.pt"
 SAM_CONFIG = "configs/sam2.1/sam2.1_hiera_t.yaml"
 VLM_URL = "http://localhost:8080/v1/chat/completions"
 CROP_DIR = "/mnt/nvme/project/hackathon/results/crops"
+LLAMA_SERVER = "/mnt/nvme/project/llama.cpp/build/bin/llama-server"
+VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.gguf"
+VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
 
 import os
 os.makedirs(CROP_DIR, exist_ok=True)
+
+def start_vlm_server():
+    """Launch llama-server and wait until it's ready."""
+    print("[VLM] Starting llama-server...")
+    proc = subprocess.Popen(
+        [LLAMA_SERVER,
+         "-m", VLM_MODEL,
+         "--mmproj", VLM_MMPROJ,
+         "-ngl", "99",
+         "--ctx-size", "2048",
+         "--host", "0.0.0.0",
+         "--port", "8080"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    # Wait for server to be ready
+    import requests
+    for i in range(60):  # up to 60s
+        time.sleep(1)
+        try:
+            r = requests.get("http://localhost:8080/health")
+            if r.status_code == 200:
+                print(f"[VLM] Server ready after {i+1}s")
+                return proc
+        except requests.ConnectionError:
+            pass
+    print("[VLM] WARNING: server may not be ready")
+    return proc
+
+def stop_vlm_server(proc):
+    """Kill llama-server and wait for GPU memory to free."""
+    proc.terminate()
+    proc.wait(timeout=10)
+    time.sleep(2)  # let GPU memory fully release
+    print("[VLM] Server stopped")
 
 def load_sam():
     t0 = time.time()
@@ -125,12 +165,15 @@ def main():
     torch.cuda.empty_cache()
     print(f"[MEM] SAM unloaded, GPU cache cleared")
     
-    # Stage 2: VLM inference (needs llama-server running)
+    # Stage 2: Start VLM, run inference, stop VLM
+    vlm_proc = start_vlm_server()
     try:
         prediction, vlm_time = query_vlm(crop_path)
     except Exception as e:
-        print(f"[VLM] Error (is llama-server running?): {e}")
+        print(f"[VLM] Error: {e}")
         prediction, vlm_time = "ERROR", 0
+    finally:
+        stop_vlm_server(vlm_proc)
     
     # Log result
     result = {
@@ -147,7 +190,7 @@ def main():
     print(f"{'='*50}")
     
     # Append to results log
-    log_path = "/mnt/nvme/project/hackathon/results/runs.jsonl"
+    log_path = "results/runs.jsonl"
     with open(log_path, "a") as f:
         f.write(json.dumps(result) + "\n")
     print(f"[LOG] Appended to {log_path}")
