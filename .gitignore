@@ -29,3 +29,4 @@ results/warmup.jpg
 results/*.log
 results/runs.jsonl
 !results/benchmark_*.json
+results/ground_viz/
