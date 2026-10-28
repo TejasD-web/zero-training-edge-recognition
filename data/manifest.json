@@ -1,5 +1,19 @@
 [
-  {"image": "img_001.jpg", "jersey_number": "", "difficulty": "", "notes": ""},
-  {"image": "img_002.jpg", "jersey_number": "", "difficulty": "", "notes": ""},
-  {"image": "img_003.jpg", "jersey_number": "", "difficulty": "", "notes": ""}
+  {"image": "img_001.jpg", "jersey_number": "31", "difficulty": "easy", "notes": "Bulls, single player, front-facing"},
+  {"image": "img_002.jpg", "jersey_number": "24", "difficulty": "easy", "notes": "Pistons, single player, dribbling"},
+  {"image": "img_003.jpg", "jersey_number": "8", "difficulty": "easy", "notes": "Lakers Kobe, standing, clear"},
+  {"image": "img_004.jpg", "jersey_number": "25", "difficulty": "easy", "notes": "Knicks, single player, front-facing"},
+  {"image": "img_005.jpg", "jersey_number": "9", "difficulty": "easy", "notes": "Spurs, single player, dribbling"},
+  {"image": "img_006.jpg", "jersey_number": "23", "difficulty": "easy", "notes": "Warriors Draymond, overhead shot, open court"},
+  {"image": "img_007.jpg", "jersey_number": "13", "difficulty": "easy", "notes": "Thunder, single player, shooting"},
+  {"image": "img_008.jpg", "jersey_number": "33,32", "difficulty": "medium", "notes": "Bird/Magic, two players, vintage"},
+  {"image": "img_009.jpg", "jersey_number": "34,1", "difficulty": "medium", "notes": "Bucks/Spurs, two players, ball occlusion"},
+  {"image": "img_010.jpg", "jersey_number": "00,45", "difficulty": "medium", "notes": "Knicks/Cavs, back+front view"},
+  {"image": "img_011.jpg", "jersey_number": "30", "difficulty": "medium", "notes": "Curry shooting, multiple defenders"},
+  {"image": "img_012.jpg", "jersey_number": "11", "difficulty": "medium", "notes": "SI cover, text overlay, Brunson"},
+  {"image": "img_013.jpg", "jersey_number": "5,7", "difficulty": "hard", "notes": "Thunder/Pacers, loose ball, bent bodies"},
+  {"image": "img_014.jpg", "jersey_number": "17", "difficulty": "hard", "notes": "Hawks/Bulls, 5 players, heavy occlusion"},
+  {"image": "img_015.jpg", "jersey_number": "5", "difficulty": "hard", "notes": "Timberwolves, heavy motion blur"},
+  {"image": "img_016.jpg", "jersey_number": "23", "difficulty": "hard", "notes": "Jordan dunk, mid-air, rotated number"},
+  {"image": "img_017.jpg", "jersey_number": "6,30,32", "difficulty": "hard", "notes": "Vintage 76ers, 3 players, occlusion"}
 ]
