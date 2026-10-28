@@ -5,11 +5,11 @@ Usage: python pipeline.py <image_path>
 import sys
 import time
 import json
+import os
+import subprocess
 import numpy as np
 import torch
 from PIL import Image
-import subprocess
-import signal
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
@@ -22,7 +22,6 @@ LLAMA_SERVER = "/mnt/nvme/project/llama.cpp/build/bin/llama-server"
 VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.gguf"
 VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
 
-import os
 os.makedirs(CROP_DIR, exist_ok=True)
 
 def start_vlm_server():
@@ -71,7 +70,7 @@ def segment_players(predictor, image_np):
     """Use automatic mask generation or center-point prompt."""
     t0 = time.time()
     predictor.set_image(image_np)
-    
+
     # For now: grid of points across the image to find players
     # TODO: replace with automatic mask generation or smarter prompting
     h, w = image_np.shape[:2]
@@ -81,7 +80,7 @@ def segment_players(predictor, image_np):
         point_labels=np.array([1]),
         multimask_output=True,
     )
-    
+
     elapsed = time.time() - t0
     print(f"[SAM] Segmented in {elapsed:.2f}s, {len(masks)} masks, scores: {scores}")
     return masks, scores, elapsed
@@ -92,7 +91,7 @@ def mask_to_crop(image_np, mask):
     cols = np.any(mask, axis=0)
     y_min, y_max = np.where(rows)[0][[0, -1]]
     x_min, x_max = np.where(cols)[0][[0, -1]]
-    
+
     # Add 10% padding
     h, w = image_np.shape[:2]
     pad_y = int((y_max - y_min) * 0.1)
@@ -101,17 +100,17 @@ def mask_to_crop(image_np, mask):
     y_max = min(h, y_max + pad_y)
     x_min = max(0, x_min - pad_x)
     x_max = min(w, x_max + pad_x)
-    
+
     return image_np[y_min:y_max, x_min:x_max]
 
 def query_vlm(crop_path):
     """Send crop to local llama-server for jersey number reading."""
     import requests
     import base64
-    
+
     with open(crop_path, "rb") as f:
         b64 = base64.b64encode(f.read()).decode()
-    
+
     t0 = time.time()
     resp = requests.post(VLM_URL, json={
         "model": "qwen2.5-vl",
@@ -125,7 +124,7 @@ def query_vlm(crop_path):
         "temperature": 0
     })
     elapsed = time.time() - t0
-    
+
     result = resp.json()
     answer = result["choices"][0]["message"]["content"].strip()
     print(f"[VLM] Predicted: '{answer}' in {elapsed:.2f}s")
@@ -135,36 +134,36 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python pipeline.py <image_path>")
         sys.exit(1)
-    
+
     image_path = sys.argv[1]
     print(f"\n{'='*50}")
     print(f"Processing: {image_path}")
     print(f"{'='*50}\n")
-    
+
     # Load image
     img = Image.open(image_path).convert("RGB")
     image_np = np.array(img)
     print(f"[INPUT] Image size: {image_np.shape[1]}x{image_np.shape[0]}")
-    
+
     # Stage 1: SAM segmentation
     predictor = load_sam()
     masks, scores, sam_time = segment_players(predictor, image_np)
-    
+
     # Use best mask
     best_idx = np.argmax(scores)
     crop_np = mask_to_crop(image_np, masks[best_idx])
-    
+
     # Save crop
     crop_path = os.path.join(CROP_DIR, "crop_best.jpg")
     Image.fromarray(crop_np).save(crop_path)
     print(f"[CROP] Saved {crop_np.shape[1]}x{crop_np.shape[0]} to {crop_path}")
-    
+
     # Unload SAM to free GPU memory
     del predictor
-    del masks, logits
+    del masks
     torch.cuda.empty_cache()
     print(f"[MEM] SAM unloaded, GPU cache cleared")
-    
+
     # Stage 2: Start VLM, run inference, stop VLM
     vlm_proc = start_vlm_server()
     try:
@@ -174,7 +173,7 @@ def main():
         prediction, vlm_time = "ERROR", 0
     finally:
         stop_vlm_server(vlm_proc)
-    
+
     # Log result
     result = {
         "image": image_path,
@@ -184,11 +183,11 @@ def main():
         "total_time_s": round(sam_time + vlm_time, 3),
         "crop_size": f"{crop_np.shape[1]}x{crop_np.shape[0]}",
     }
-    
+
     print(f"\n{'='*50}")
     print(f"RESULT: {json.dumps(result, indent=2)}")
     print(f"{'='*50}")
-    
+
     # Append to results log
     log_path = "results/runs.jsonl"
     with open(log_path, "a") as f:
