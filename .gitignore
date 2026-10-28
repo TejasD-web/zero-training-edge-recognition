@@ -24,3 +24,8 @@ __pycache__/
 
 # OS
 .DS_Store
+results/crops/
+results/warmup.jpg
+results/*.log
+results/runs.jsonl
+!results/benchmark_*.json
