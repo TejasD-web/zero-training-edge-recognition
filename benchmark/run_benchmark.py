@@ -1,5 +1,5 @@
 """
-Benchmark harness: all images → SAM (one process) → crops → VLM (one server session) → score.
+Benchmark harness: VLM server (first, on clean CMA) → SAM batch (one process) → crops → score.
 Usage:
   python benchmark/run_benchmark.py              # SAM-crop condition
   python benchmark/run_benchmark.py --baseline   # also query full images (no SAM) for ablation
@@ -17,22 +17,23 @@ LLAMA_SERVER = "/mnt/nvme/project/llama.cpp/build/bin/llama-server"
 VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.gguf"
 VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
 VLM_URL = "http://localhost:8080/v1/chat/completions"
-SAM_DEVICE = "cuda"
-VLM_NGL = "10"
+SAM_DEVICE = "cuda"   # "cpu" = fallback if SAM can't share GPU with the server
+VLM_NGL = "10"        # 99 starves the 433 MB vision buffer of CMA
 PROMPT = "What jersey number is the player wearing? Reply with ONLY the number, nothing else."
 
 os.makedirs(CROP_DIR, exist_ok=True)
 
-# ── Stage 1: SAM batch worker (loads model ONCE, segments every image) ──
+# ── SAM batch worker (loads model ONCE, segments every image, retries on allocator errors) ──
 
 SAM_BATCH_SCRIPT = r'''
-import sys, time, json, os, numpy as np
+import sys, time, json, os, numpy as np, torch
 from PIL import Image
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 image_paths = json.loads(sys.argv[1])
 crop_dir, device = sys.argv[2], sys.argv[3]
+MAX_ATTEMPTS = 3
 
 t0 = time.time()
 model = build_sam2("configs/sam2.1/sam2.1_hiera_t.yaml",
@@ -40,18 +41,42 @@ model = build_sam2("configs/sam2.1/sam2.1_hiera_t.yaml",
 predictor = SAM2ImagePredictor(model)
 print(json.dumps({"event": "loaded", "sam_load_time": round(time.time() - t0, 3)}), flush=True)
 
+# Warm-up: absorb the first-allocation NVML assert on a dummy image
+for _ in range(5):
+    try:
+        predictor.set_image(np.zeros((1024, 1024, 3), dtype=np.uint8))
+        break
+    except RuntimeError:
+        if device == "cuda":
+            torch.cuda.empty_cache()
+        time.sleep(0.5)
+
 for path in image_paths:
+    name = os.path.basename(path)
     try:
         image_np = np.array(Image.open(path).convert("RGB"))
         h, w = image_np.shape[:2]
-        t1 = time.time()
-        predictor.set_image(image_np)
-        masks, scores, _ = predictor.predict(
-            point_coords=np.array([[w // 2, h // 2]]),
-            point_labels=np.array([1]),
-            multimask_output=True,
-        )
-        seg_time = time.time() - t1
+
+        attempts = 0
+        while True:
+            attempts += 1
+            try:
+                t1 = time.time()
+                predictor.set_image(image_np)
+                masks, scores, _ = predictor.predict(
+                    point_coords=np.array([[w // 2, h // 2]]),
+                    point_labels=np.array([1]),
+                    multimask_output=True,
+                )
+                seg_time = time.time() - t1
+                break
+            except RuntimeError as e:
+                if device == "cuda":
+                    torch.cuda.empty_cache()
+                if attempts >= MAX_ATTEMPTS:
+                    raise
+                time.sleep(0.5)
+
         mask = masks[int(np.argmax(scores))]
         rows, cols = np.any(mask, axis=1), np.any(mask, axis=0)
         y0, y1 = np.where(rows)[0][[0, -1]]
@@ -60,17 +85,16 @@ for path in image_paths:
         y0, y1 = max(0, y0 - py), min(h, y1 + py)
         x0, x1 = max(0, x0 - px), min(w, x1 + px)
         crop = image_np[y0:y1, x0:x1]
-        name = os.path.splitext(os.path.basename(path))[0]
-        crop_path = os.path.join(crop_dir, f"crop_{name}.jpg")
+        crop_path = os.path.join(crop_dir, f"crop_{os.path.splitext(name)[0]}.jpg")
         Image.fromarray(crop).save(crop_path)
         print(json.dumps({
-            "event": "crop", "image": os.path.basename(path), "crop_path": crop_path,
+            "event": "crop", "image": name, "crop_path": crop_path,
             "crop_size": f"{crop.shape[1]}x{crop.shape[0]}", "image_size": f"{w}x{h}",
-            "sam_seg_time": round(seg_time, 3),
+            "sam_seg_time": round(seg_time, 3), "attempts": attempts,
             "sam_scores": [round(float(s), 4) for s in scores],
         }), flush=True)
     except Exception as e:
-        print(json.dumps({"event": "error", "image": os.path.basename(path), "error": str(e)}), flush=True)
+        print(json.dumps({"event": "error", "image": name, "error": str(e)[:200]}), flush=True)
 '''
 
 def run_sam_batch(image_paths):
@@ -90,14 +114,15 @@ def run_sam_batch(image_paths):
             print(f"[SAM] Model loaded in {load_time}s")
         elif ev["event"] == "crop":
             crops[ev["image"]] = ev
-            print(f"[SAM] {ev['image']}: {ev['crop_size']} in {ev['sam_seg_time']}s")
+            retry = f" (attempt {ev['attempts']})" if ev["attempts"] > 1 else ""
+            print(f"[SAM] {ev['image']}: {ev['crop_size']} in {ev['sam_seg_time']}s{retry}")
         elif ev["event"] == "error":
             print(f"[SAM] {ev['image']}: ERROR {ev['error']}")
     if proc.returncode != 0:
         print(f"[SAM] Process exited with code {proc.returncode}:\n{proc.stderr[-2000:]}")
     return crops, load_time
 
-# ── Stage 2: one llama-server session for all queries ──
+# ── VLM server (one session for all queries) ──
 
 def start_vlm_server():
     print(f"[VLM] Starting llama-server (ngl={VLM_NGL}, unified memory)...")
@@ -161,7 +186,7 @@ def score(pred_raw, truth):
 def load_manifest():
     with open(MANIFEST) as f:
         data = json.load(f)
-    if isinstance(data, dict):  # tolerate {"images": [...]} style
+    if isinstance(data, dict):
         data = next(v for v in data.values() if isinstance(v, list))
     return data
 
@@ -178,6 +203,7 @@ def summarize(rows, key):
     lat = [r[key]["vlm_time_s"] for r in valid]
     return {
         "accuracy": round(correct / len(valid), 3), "correct": correct, "total": len(valid),
+        "missing": len(rows) - len(valid),
         "by_difficulty": {k: f"{c}/{n}" for k, (c, n) in sorted(by_diff.items())},
         "vlm_latency_mean_s": round(statistics.mean(lat), 3),
         "vlm_latency_p50_s": round(statistics.median(lat), 3),
@@ -193,9 +219,9 @@ def main():
     manifest = load_manifest()
     image_paths = [os.path.join(IMAGE_DIR, m["image"]) for m in manifest]
 
-    # 1. VLM FIRST — grab clean CMA before SAM fragments it
+    # 1. VLM first — grab clean CMA before SAM fragments it
     vlm_proc, server_startup = start_vlm_server()
-    rows = []
+    rows, sam_load_time = [], None
     try:
         # 2. Warm-up: confirm image inference works before spending time on SAM
         from PIL import Image
@@ -207,7 +233,7 @@ def main():
         # 3. SAM batch while server stays loaded
         crops, sam_load_time = run_sam_batch(image_paths)
 
-        # 4. Query all crops
+        # 4. Query all crops (and optionally full images)
         for m in manifest:
             if vlm_proc.poll() is not None:
                 print(f"[VLM] Server died (code {vlm_proc.returncode}) — aborting. See results/vlm_server.log")
@@ -219,7 +245,8 @@ def main():
                     raw, t = query_vlm(c["crop_path"])
                     ok, pred = score(raw, m["jersey_number"])
                     row["sam_crop"] = {"raw": raw, "pred": pred, "correct": ok, "vlm_time_s": t,
-                                       "sam_seg_time_s": c["sam_seg_time"], "crop_size": c["crop_size"]}
+                                       "sam_seg_time_s": c["sam_seg_time"], "crop_size": c["crop_size"],
+                                       "sam_attempts": c["attempts"]}
                     print(f"[CROP] {m['image']}: pred={pred} truth={m['jersey_number']} {'✓' if ok else '✗'} ({t}s)")
                 except Exception as e:
                     print(f"[CROP] {m['image']}: ERROR {e}")
@@ -237,8 +264,9 @@ def main():
 
     summary = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "config": {"order": "vlm_first", "sam_device": SAM_DEVICE, "vlm_ngl": VLM_NGL, "prompt": PROMPT,
-                   "sam_load_time_s": locals().get("sam_load_time"), "vlm_server_startup_s": server_startup},
+        "config": {"order": "vlm_first", "sam_device": SAM_DEVICE, "vlm_ngl": VLM_NGL,
+                   "image_max_tokens": 256, "prompt": PROMPT,
+                   "sam_load_time_s": sam_load_time, "vlm_server_startup_s": server_startup},
         "sam_crop": summarize(rows, "sam_crop"),
         "full_image": summarize(rows, "full_image"),
     }
