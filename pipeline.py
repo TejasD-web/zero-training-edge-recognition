@@ -17,6 +17,9 @@ LLAMA_SERVER = "/mnt/nvme/project/llama.cpp/build/bin/llama-server"
 VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.gguf"
 VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
 
+SAM_DEVICE = "cuda"   # "cpu" = known-working fallback
+VLM_NGL = "99"        # "0" = known-working fallback
+
 os.makedirs(CROP_DIR, exist_ok=True)
 
 # ── SAM stage (runs as a separate script) ──
@@ -32,12 +35,13 @@ SAM_CONFIG = "configs/sam2.1/sam2.1_hiera_t.yaml"
 
 image_path = sys.argv[1]
 crop_dir = sys.argv[2]
+device = sys.argv[3]
 
 img = Image.open(image_path).convert("RGB")
 image_np = np.array(img)
 
 t0 = time.time()
-model = build_sam2(SAM_CONFIG, SAM_CHECKPOINT, device="cpu")
+model = build_sam2(SAM_CONFIG, SAM_CHECKPOINT, device=device)
 predictor = SAM2ImagePredictor(model)
 load_time = time.time() - t0
 
@@ -82,25 +86,29 @@ print(json.dumps(result))
 # ── VLM helpers ──
 
 def start_vlm_server():
-    print("[VLM] Starting llama-server...")
+    print(f"[VLM] Starting llama-server (ngl={VLM_NGL}, unified memory)...")
     log_file = open("results/vlm_server.log", "w")
     clean_env = {k: v for k, v in os.environ.items() if k != "LD_LIBRARY_PATH"}
+    clean_env["GGML_CUDA_ENABLE_UNIFIED_MEMORY"] = "1"
     proc = subprocess.Popen(
         [LLAMA_SERVER,
          "-m", VLM_MODEL,
          "--mmproj", VLM_MMPROJ,
-         "-ngl", "0",
+         "-ngl", VLM_NGL,
          "--ctx-size", "512",
          "--host", "0.0.0.0",
          "--port", "8080",
          "-np", "1"],
         stdout=log_file,
         stderr=subprocess.STDOUT,
-            env=clean_env,
+        env=clean_env,
     )
     import requests
     for i in range(120):
         time.sleep(1)
+        if proc.poll() is not None:
+            print(f"[VLM] Server exited early (code {proc.returncode}) — see results/vlm_server.log")
+            return proc
         try:
             r = requests.get("http://localhost:8080/health")
             if r.status_code == 200:
@@ -112,8 +120,9 @@ def start_vlm_server():
     return proc
 
 def stop_vlm_server(proc):
-    proc.terminate()
-    proc.wait(timeout=10)
+    if proc.poll() is None:
+        proc.terminate()
+        proc.wait(timeout=10)
     time.sleep(2)
     print("[VLM] Server stopped")
 
@@ -151,10 +160,10 @@ def main():
     print(f"Processing: {image_path}")
     print(f"{'='*50}\n")
 
-    # Stage 1: Run SAM in a SEPARATE PROCESS so GPU memory is fully freed on exit
-    print("[SAM] Running segmentation in subprocess...")
+    # Stage 1: SAM in a separate process
+    print(f"[SAM] Running segmentation in subprocess (device={SAM_DEVICE})...")
     sam_result = subprocess.run(
-        [sys.executable, "-c", SAM_SCRIPT, image_path, CROP_DIR],
+        [sys.executable, "-c", SAM_SCRIPT, image_path, CROP_DIR, SAM_DEVICE],
         capture_output=True, text=True,
         cwd=os.getcwd(),
     )
@@ -166,13 +175,13 @@ def main():
     print(f"[SAM] Loaded in {sam_info['sam_load_time']}s")
     print(f"[SAM] Segmented in {sam_info['sam_seg_time']}s, scores: {sam_info['scores']}")
     print(f"[CROP] Saved {sam_info['crop_size']} to {sam_info['crop_path']}")
-    print(f"[MEM] SAM process exited — GPU memory fully released")
-    time.sleep(5)  # let CMA recover
+    print(f"[MEM] SAM process exited ({SAM_DEVICE})")
+    time.sleep(5)  # let CMA settle
 
     sam_time = sam_info['sam_load_time'] + sam_info['sam_seg_time']
     crop_path = sam_info['crop_path']
 
-    # Stage 2: Start VLM on clean GPU, run inference, stop VLM
+    # Stage 2: VLM
     vlm_proc = start_vlm_server()
     try:
         prediction, vlm_time = query_vlm(crop_path)
@@ -182,10 +191,11 @@ def main():
     finally:
         stop_vlm_server(vlm_proc)
 
-    # Log result
     result = {
         "image": image_path,
         "prediction": prediction,
+        "sam_device": SAM_DEVICE,
+        "vlm_ngl": VLM_NGL,
         "sam_time_s": round(sam_time, 3),
         "vlm_time_s": round(vlm_time, 3),
         "total_time_s": round(sam_time + vlm_time, 3),
