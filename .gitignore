@@ -30,3 +30,5 @@ results/*.log
 results/runs.jsonl
 !results/benchmark_*.json
 results/ground_viz/
+.env
+results/cloud_viz/
