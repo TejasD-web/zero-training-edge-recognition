@@ -7,9 +7,9 @@
 *.onnx
 
 # Test data
-data/jersey_images/*.jpg
-data/jersey_images/*.png
-data/jersey_images/*.jpeg
+data/images/*.jpg
+data/images/*.png
+data/images/*.jpeg
 
 # Results (keep structure, not outputs)
 results/*.json
