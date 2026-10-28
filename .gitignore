@@ -1,0 +1,26 @@
+# Model weights
+*.pt
+*.pth
+*.gguf
+*.bin
+*.safetensors
+*.onnx
+
+# Test data
+data/jersey_images/*.jpg
+data/jersey_images/*.png
+data/jersey_images/*.jpeg
+
+# Results (keep structure, not outputs)
+results/*.json
+results/*.csv
+results/*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*-env/
+
+# OS
+.DS_Store
