@@ -17,7 +17,7 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 SAM_CHECKPOINT = "/mnt/nvme/models/sam2/sam2.1_hiera_tiny.pt"
 SAM_CONFIG = "configs/sam2.1/sam2.1_hiera_t.yaml"
 VLM_URL = "http://localhost:8080/v1/chat/completions"
-CROP_DIR = "/mnt/nvme/project/hackathon/results/crops"
+CROP_DIR = "results/crops"
 LLAMA_SERVER = "/mnt/nvme/project/llama.cpp/build/bin/llama-server"
 VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.gguf"
 VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
