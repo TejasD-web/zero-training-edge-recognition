@@ -1,0 +1,886 @@
+{
+  "max_tier": 3,
+  "records": [
+    {
+      "image": "img_001.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "31",
+          "latency_s": 4.122,
+          "raw": "31"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.944,
+          "box": [
+            624,
+            569,
+            889,
+            769
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "31",
+          "latency_s": 2.608,
+          "raw": "31"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "31",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 15.933,
+      "truth": "31",
+      "correct": true
+    },
+    {
+      "image": "img_002.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "24",
+          "latency_s": 2.623,
+          "raw": "24"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 7.849,
+          "box": [
+            602,
+            731,
+            683,
+            798
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "6",
+          "latency_s": 2.5,
+          "raw": "6"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.593,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "24",
+          "latency_s": 2.663,
+          "raw": "24",
+          "box": [
+            602,
+            784,
+            775,
+            918
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "24",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 17.604,
+      "truth": "24",
+      "correct": true
+    },
+    {
+      "image": "img_003.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "8",
+          "latency_s": 2.52,
+          "raw": "8"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.108,
+          "box": [
+            207,
+            262,
+            300,
+            368
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "8",
+          "latency_s": 2.476,
+          "raw": "8"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "8",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.201,
+      "truth": "8",
+      "correct": true
+    },
+    {
+      "image": "img_004.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "25",
+          "latency_s": 2.637,
+          "raw": "25"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.001,
+          "box": [
+            374,
+            552,
+            663,
+            768
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "25",
+          "latency_s": 2.6,
+          "raw": "25"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "25",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 14.444,
+      "truth": "25",
+      "correct": true
+    },
+    {
+      "image": "img_005.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "9",
+          "latency_s": 2.498,
+          "raw": "9"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.988,
+          "box": [
+            295,
+            203,
+            325,
+            237
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.574,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.859,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "9",
+          "latency_s": 2.738,
+          "raw": "9",
+          "box": [
+            285,
+            299,
+            320,
+            342
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "9",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 18.775,
+      "truth": "9",
+      "correct": true
+    },
+    {
+      "image": "img_006.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "17",
+          "latency_s": 2.651,
+          "raw": "17"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.018,
+          "box": [
+            1051,
+            368,
+            1107,
+            447
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.565,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 2.016,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "2",
+          "latency_s": 2.526,
+          "raw": "2",
+          "box": [
+            1124,
+            365,
+            1188,
+            445
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "23",
+          "latency_s": 2.082,
+          "raw": "23"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "23",
+      "reason": "escalated: edge views disagree",
+      "confident": true,
+      "left_device": true,
+      "total_s": 20.254,
+      "truth": "23",
+      "correct": true
+    },
+    {
+      "image": "img_007.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "13",
+          "latency_s": 2.713,
+          "raw": "13"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.175,
+          "box": [
+            202,
+            391,
+            283,
+            475
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "13",
+          "latency_s": 2.646,
+          "raw": "13"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "13",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.627,
+      "truth": "13",
+      "correct": true
+    },
+    {
+      "image": "img_008.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "3",
+          "latency_s": 2.523,
+          "raw": "3"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.016,
+          "box": [
+            585,
+            515,
+            682,
+            633
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "24",
+          "latency_s": 2.606,
+          "raw": "24"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.792,
+          "n_boxes": 2
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "32",
+          "latency_s": 2.645,
+          "raw": "32",
+          "box": [
+            574,
+            691,
+            788,
+            860
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "32",
+          "latency_s": 2.079,
+          "raw": "32"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "32",
+      "reason": "escalated: edge views disagree",
+      "confident": true,
+      "left_device": true,
+      "total_s": 21.136,
+      "truth": "33,32",
+      "correct": true
+    },
+    {
+      "image": "img_009.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "34",
+          "latency_s": 2.659,
+          "raw": "34"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.198,
+          "box": [
+            597,
+            417,
+            672,
+            511
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "1",
+          "latency_s": 2.538,
+          "raw": "1"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.07,
+          "n_boxes": 2
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "34",
+          "latency_s": 2.752,
+          "raw": "34",
+          "box": [
+            715,
+            477,
+            798,
+            546
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "34",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 18.587,
+      "truth": "34,1",
+      "correct": true
+    },
+    {
+      "image": "img_010.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "15",
+          "latency_s": 2.56,
+          "raw": "15"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.274,
+          "box": [
+            418,
+            714,
+            725,
+            1003
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "00",
+          "latency_s": 2.582,
+          "raw": "00"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.944,
+          "n_boxes": 3
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "00",
+          "latency_s": 2.59,
+          "raw": "00",
+          "box": [
+            428,
+            723,
+            616,
+            883
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "00",
+          "latency_s": 2.887,
+          "raw": "00"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "00",
+      "reason": "escalated: edge views disagree",
+      "confident": true,
+      "left_device": true,
+      "total_s": 22.343,
+      "truth": "00,45",
+      "correct": true
+    },
+    {
+      "image": "img_011.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "4",
+          "latency_s": 2.645,
+          "raw": "4"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.18,
+          "box": [
+            807,
+            904,
+            873,
+            1031
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "2",
+          "latency_s": 2.539,
+          "raw": "2"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 3.007,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "4",
+          "latency_s": 2.577,
+          "raw": "4",
+          "box": [
+            137,
+            1123,
+            171,
+            1177
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "4",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 21.337,
+      "truth": "30",
+      "correct": false
+    },
+    {
+      "image": "img_012.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "11",
+          "latency_s": 2.663,
+          "raw": "11"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.321,
+          "box": [
+            204,
+            195,
+            305,
+            279
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "1",
+          "latency_s": 2.501,
+          "raw": "1"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.953,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "11",
+          "latency_s": 2.589,
+          "raw": "11",
+          "box": [
+            197,
+            296,
+            233,
+            353
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "11",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 19.161,
+      "truth": "11",
+      "correct": true
+    },
+    {
+      "image": "img_013.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "5",
+          "latency_s": 2.498,
+          "raw": "5"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.958,
+          "box": [
+            369,
+            510,
+            427,
+            604
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "5",
+          "latency_s": 2.475,
+          "raw": "5"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "5",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 15.13,
+      "truth": "5,7",
+      "correct": true
+    },
+    {
+      "image": "img_014.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "17",
+          "latency_s": 2.62,
+          "raw": "17"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.109,
+          "box": [
+            1027,
+            1207,
+            1079,
+            1271
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.57,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.169,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "17",
+          "latency_s": 2.668,
+          "raw": "17",
+          "box": [
+            766,
+            1086,
+            926,
+            1251
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "17",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 17.487,
+      "truth": "17",
+      "correct": true
+    },
+    {
+      "image": "img_015.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "3",
+          "latency_s": 2.563,
+          "raw": "3"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.214,
+          "box": [
+            796,
+            317,
+            870,
+            382
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.606,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.117,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "5",
+          "latency_s": 2.481,
+          "raw": "5",
+          "box": [
+            1209,
+            645,
+            1264,
+            699
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "5",
+          "latency_s": 1.738,
+          "raw": "5"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "5",
+      "reason": "escalated: edge views disagree",
+      "confident": true,
+      "left_device": true,
+      "total_s": 20.068,
+      "truth": "5",
+      "correct": true
+    },
+    {
+      "image": "img_016.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "23",
+          "latency_s": 2.68,
+          "raw": "23"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 4.747,
+          "box": null
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.758,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "3",
+          "latency_s": 2.57,
+          "raw": "3",
+          "box": [
+            907,
+            641,
+            984,
+            721
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "23",
+          "latency_s": 1.451,
+          "raw": "23"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "23",
+      "reason": "escalated: edge views disagree",
+      "confident": true,
+      "left_device": true,
+      "total_s": 12.624,
+      "truth": "23",
+      "correct": true
+    },
+    {
+      "image": "img_017.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "32",
+          "latency_s": 2.742,
+          "raw": "32"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.244,
+          "box": [
+            176,
+            342,
+            193,
+            378
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "30",
+          "latency_s": 2.623,
+          "raw": "30"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.008,
+          "n_boxes": 3
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "32",
+          "latency_s": 2.631,
+          "raw": "32",
+          "box": [
+            360,
+            226,
+            390,
+            252
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "32",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 17.362,
+      "truth": "6,30,32",
+      "correct": true
+    }
+  ]
+}

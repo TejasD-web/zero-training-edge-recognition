@@ -32,3 +32,4 @@ results/runs.jsonl
 results/ground_viz/
 .env
 results/cloud_viz/
+!results/route_*.json
