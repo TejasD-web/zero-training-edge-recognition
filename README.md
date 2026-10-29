@@ -55,3 +55,13 @@ python benchmark/run_benchmark.py --baseline --grounding
 ```
 
 Results are written to `results/benchmark_<timestamp>.json`. Images are not distributed with this repo.
+
+## Related work
+
+This project implements, on a real 8 GB / 25 W edge device, ideas that recent research has shown on benchmarks and simulated settings:
+
+- **Agreement-based cascades:** Kolawole, Dennis, Talwalkar and Smith (CMU, TMLR 2025) route inputs through tiers of increasingly large models and escalate only when the models at a tier disagree. It is training-free, with up to 14× lower edge-to-cloud communication at matched accuracy. Our router uses the same principle with view agreement on a single edge VLM. [arXiv:2407.02348](https://arxiv.org/abs/2407.02348)
+- **Edge-to-server VLM collaboration:** Song and Kim (POSTECH) escalate from edge to server on model uncertainty and send a localized high-resolution crop, which recovers fine-detail (text/OCR) accuracy at a fraction of full retransmission cost. We see the same pattern: on the edge, localization rather than reading is the bottleneck. [arXiv:2512.16349](https://arxiv.org/abs/2512.16349)
+- **Onboard autonomy under constrained links:** NASA JPL's AEGIS has selected science targets autonomously on Mars rovers since 2010, because waiting on the Earth link costs time and power. This motivates the "read now, ask later" setting. [AEGIS](https://ai.jpl.nasa.gov/public/projects/aegis)
+
+What this project adds: a working edge→cloud cascade on Jetson hardware with a 960 MB effective GPU budget, Meta's SAM 3.1 as the cloud localizer and Muse Spark as the cloud reader, and measured accuracy, cloud usage and latency for each tier.
