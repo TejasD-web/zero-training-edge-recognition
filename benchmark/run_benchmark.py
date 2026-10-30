@@ -168,7 +168,7 @@ def start_vlm_server():
     proc = subprocess.Popen(
         [LLAMA_SERVER, "-m", VLM_MODEL, "--mmproj", VLM_MMPROJ,
          "-ngl", VLM_NGL, "--ctx-size", "1536", "--host", "0.0.0.0",
-         "--port", "8080", "-np", "1", "--image-min-tokens", "64", "--image-max-tokens", "1024", "-b", "1024", "-ub", "512"],
+         "--port", "8080", "-np", "1", "--image-min-tokens", "64", "--image-max-tokens", "1024", "-b", "1024", "-ub", "512", "-lv", "4", "-lm", "dio"],
         stdout=log_file, stderr=subprocess.STDOUT, env=env,
     )
     import requests
