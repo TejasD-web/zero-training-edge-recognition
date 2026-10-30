@@ -1,0 +1,561 @@
+{
+  "policy": "confidence",
+  "threshold": 0.9,
+  "max_tier": 3,
+  "manifest": "data/manifest.json",
+  "records": [
+    {
+      "image": "img_001.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "31",
+          "latency_s": 4.139,
+          "raw": "31",
+          "conf": 0.9067
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.9067,
+        "min": 0.9207,
+        "margin": 0.9769,
+        "n_digit_tokens": 2
+      },
+      "tier": 1,
+      "answer": "31",
+      "reason": "edge confidence 0.907 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 4.279,
+      "policy": "confidence",
+      "truth": "31",
+      "correct": true
+    },
+    {
+      "image": "img_002.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "24",
+          "latency_s": 2.793,
+          "raw": "24",
+          "conf": 0.987
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.987,
+        "min": 0.9894,
+        "margin": 0.9968,
+        "n_digit_tokens": 2
+      },
+      "tier": 1,
+      "answer": "24",
+      "reason": "edge confidence 0.987 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 2.885,
+      "policy": "confidence",
+      "truth": "24",
+      "correct": true
+    },
+    {
+      "image": "img_003.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "8",
+          "latency_s": 2.557,
+          "raw": "8",
+          "conf": 0.9872
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.9872,
+        "min": 0.9872,
+        "margin": 0.9827,
+        "n_digit_tokens": 1
+      },
+      "tier": 1,
+      "answer": "8",
+      "reason": "edge confidence 0.987 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 2.592,
+      "policy": "confidence",
+      "truth": "8",
+      "correct": true
+    },
+    {
+      "image": "img_004.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "25",
+          "latency_s": 2.607,
+          "raw": "25",
+          "conf": 0.9988
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.9988,
+        "min": 0.9993,
+        "margin": 0.9991,
+        "n_digit_tokens": 2
+      },
+      "tier": 1,
+      "answer": "25",
+      "reason": "edge confidence 0.999 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 2.698,
+      "policy": "confidence",
+      "truth": "25",
+      "correct": true
+    },
+    {
+      "image": "img_005.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "9",
+          "latency_s": 2.528,
+          "raw": "9",
+          "conf": 0.9403
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.9403,
+        "min": 0.9403,
+        "margin": 0.9182,
+        "n_digit_tokens": 1
+      },
+      "tier": 1,
+      "answer": "9",
+      "reason": "edge confidence 0.940 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 2.568,
+      "policy": "confidence",
+      "truth": "9",
+      "correct": true
+    },
+    {
+      "image": "img_006.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "17",
+          "latency_s": 2.601,
+          "raw": "17",
+          "conf": 0.2583
+        },
+        {
+          "step": "muse_full",
+          "pred": "23",
+          "latency_s": 2.517,
+          "raw": "23"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.2583,
+        "min": 0.4616,
+        "margin": 0.3352,
+        "n_digit_tokens": 2
+      },
+      "tier": 3,
+      "answer": "23",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 5.283,
+      "policy": "confidence",
+      "truth": "23",
+      "correct": true
+    },
+    {
+      "image": "img_007.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "13",
+          "latency_s": 2.628,
+          "raw": "13",
+          "conf": 0.9974
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.9974,
+        "min": 0.9986,
+        "margin": 0.9985,
+        "n_digit_tokens": 2
+      },
+      "tier": 1,
+      "answer": "13",
+      "reason": "edge confidence 0.997 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 2.661,
+      "policy": "confidence",
+      "truth": "13",
+      "correct": true
+    },
+    {
+      "image": "img_008.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "3",
+          "latency_s": 2.516,
+          "raw": "3",
+          "conf": 0.8318
+        },
+        {
+          "step": "muse_full",
+          "pred": "32",
+          "latency_s": 3.632,
+          "raw": "32"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.8318,
+        "min": 0.8318,
+        "margin": 0.7414,
+        "n_digit_tokens": 1
+      },
+      "tier": 3,
+      "answer": "32",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 6.31,
+      "policy": "confidence",
+      "truth": "33,32",
+      "correct": true
+    },
+    {
+      "image": "img_009.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "34",
+          "latency_s": 2.681,
+          "raw": "34",
+          "conf": 0.7484
+        },
+        {
+          "step": "muse_full",
+          "pred": "34",
+          "latency_s": 5.202,
+          "raw": "34"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.7484,
+        "min": 0.8143,
+        "margin": 0.7327,
+        "n_digit_tokens": 2
+      },
+      "tier": 3,
+      "answer": "34",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 8.056,
+      "policy": "confidence",
+      "truth": "34,1",
+      "correct": true
+    },
+    {
+      "image": "img_010.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "15",
+          "latency_s": 2.635,
+          "raw": "15",
+          "conf": 0.5879
+        },
+        {
+          "step": "muse_full",
+          "pred": "00",
+          "latency_s": 4.501,
+          "raw": "00"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.5879,
+        "min": 0.599,
+        "margin": 0.2578,
+        "n_digit_tokens": 2
+      },
+      "tier": 3,
+      "answer": "00",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 7.328,
+      "policy": "confidence",
+      "truth": "00,45",
+      "correct": true
+    },
+    {
+      "image": "img_011.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "4",
+          "latency_s": 2.577,
+          "raw": "4",
+          "conf": 0.3358
+        },
+        {
+          "step": "muse_full",
+          "pred": "30",
+          "latency_s": 3.985,
+          "raw": "30"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.3358,
+        "min": 0.3358,
+        "margin": 0.0967,
+        "n_digit_tokens": 1
+      },
+      "tier": 3,
+      "answer": "30",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 6.728,
+      "policy": "confidence",
+      "truth": "30",
+      "correct": true
+    },
+    {
+      "image": "img_012.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "11",
+          "latency_s": 2.677,
+          "raw": "11",
+          "conf": 0.9334
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "edge_conf": {
+        "joint": 0.9334,
+        "min": 0.9464,
+        "margin": 0.927,
+        "n_digit_tokens": 2
+      },
+      "tier": 1,
+      "answer": "11",
+      "reason": "edge confidence 0.933 >= 0.9",
+      "confident": true,
+      "left_device": false,
+      "total_s": 2.721,
+      "policy": "confidence",
+      "truth": "11",
+      "correct": true
+    },
+    {
+      "image": "img_013.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "5",
+          "latency_s": 2.515,
+          "raw": "5",
+          "conf": 0.3927
+        },
+        {
+          "step": "muse_full",
+          "pred": "5",
+          "latency_s": 3.44,
+          "raw": "5"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.3927,
+        "min": 0.3927,
+        "margin": 0.2058,
+        "n_digit_tokens": 1
+      },
+      "tier": 3,
+      "answer": "5",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 6.099,
+      "policy": "confidence",
+      "truth": "5,7",
+      "correct": true
+    },
+    {
+      "image": "img_014.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "17",
+          "latency_s": 2.62,
+          "raw": "17",
+          "conf": 0.1599
+        },
+        {
+          "step": "muse_full",
+          "pred": "17",
+          "latency_s": 2.67,
+          "raw": "17"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.1599,
+        "min": 0.3766,
+        "margin": 0.039,
+        "n_digit_tokens": 2
+      },
+      "tier": 3,
+      "answer": "17",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 5.457,
+      "policy": "confidence",
+      "truth": "17",
+      "correct": true
+    },
+    {
+      "image": "img_015.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "3",
+          "latency_s": 2.541,
+          "raw": "3",
+          "conf": 0.2945
+        },
+        {
+          "step": "muse_full",
+          "pred": "5",
+          "latency_s": 2.102,
+          "raw": "5"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.2945,
+        "min": 0.2945,
+        "margin": 0.0484,
+        "n_digit_tokens": 1
+      },
+      "tier": 3,
+      "answer": "5",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 4.802,
+      "policy": "confidence",
+      "truth": "5",
+      "correct": true
+    },
+    {
+      "image": "img_016.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "23",
+          "latency_s": 2.71,
+          "raw": "23",
+          "conf": 0.8352
+        },
+        {
+          "step": "muse_full",
+          "pred": "23",
+          "latency_s": 2.756,
+          "raw": "23"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.8352,
+        "min": 0.8407,
+        "margin": 0.7791,
+        "n_digit_tokens": 2
+      },
+      "tier": 3,
+      "answer": "23",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 5.649,
+      "policy": "confidence",
+      "truth": "23",
+      "correct": true
+    },
+    {
+      "image": "img_017.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "32",
+          "latency_s": 2.648,
+          "raw": "32",
+          "conf": 0.3847
+        },
+        {
+          "step": "muse_full",
+          "pred": "6",
+          "latency_s": 4.676,
+          "raw": "6"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 1,
+      "edge_conf": {
+        "joint": 0.3847,
+        "min": 0.4646,
+        "margin": 0.733,
+        "n_digit_tokens": 2
+      },
+      "tier": 3,
+      "answer": "6",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 7.375,
+      "policy": "confidence",
+      "truth": "6,30,32",
+      "correct": true
+    }
+  ]
+}
