@@ -13,3 +13,7 @@ Labeling:
 - jersey_number = every number a person can read with confidence; comma-separated if several players
 - prediction counts as correct if it matches any listed number (same as dev set)
 - labels and difficulty assigned by looking at the image only, before any model run
+
+Pre-registered router policy (chosen on dev set, results/logprob_probe_20261030_031140.json):
+- Primary: edge full-image read; answer on-device if joint digit probability >= 0.9, else escalate to Muse Spark (full image).
+- Secondary (reported for comparison): agreement cascade from router/route.py (Qwen box agreement -> SAM 3.1 crop agreement -> Muse).
