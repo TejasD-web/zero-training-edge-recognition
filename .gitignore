@@ -33,3 +33,6 @@ results/ground_viz/
 .env
 results/cloud_viz/
 !results/route_*.json
+data/heldout/images/*.jpg
+data/heldout/images/*.jpeg
+data/heldout/images/*.png

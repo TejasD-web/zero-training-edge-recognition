@@ -1,0 +1,22 @@
+[
+  {"image": "ho_001.jpg", "jersey_number": "11,44", "difficulty": "medium", "notes": "Stock photo, red #44 vs grey #11 at rim; second 4 partly behind arm"},
+  {"image": "ho_002.jpg", "jersey_number": "45,3", "difficulty": "hard", "notes": "Cavs #45 drive vs Knicks #3 HART; 4+ players, left Knicks number angled/unreadable"},
+  {"image": "ho_003.jpg", "jersey_number": "40,42,10", "difficulty": "hard", "notes": "1988 Finals wide shot, Pistons vs Lakers; small numbers, Getty watermark; Dumars #4 partly visible"},
+  {"image": "ho_004.jpg", "jersey_number": "33", "difficulty": "hard", "notes": "Indiana St #33 vs Michigan St lineup, 4 players; Michigan St #33 partly hidden"},
+  {"image": "ho_005.jpg", "jersey_number": "31,13,3,30,16", "difficulty": "hard", "notes": "Dallas vs Pelicans wide shot, many small numbers; driving Pelicans player's number hidden"},
+  {"image": "ho_006.jpg", "jersey_number": "0,10", "difficulty": "medium", "notes": "Pelicans #0 FEARS back view vs Dallas #10"},
+  {"image": "ho_007.jpg", "jersey_number": "10", "difficulty": "easy", "notes": "WNBA Seattle #10 dribbling, player fairly small in frame"},
+  {"image": "ho_008.jpg", "jersey_number": "15,32", "difficulty": "hard", "notes": "Denver #15 mid-air dunk, Hawks #32 in background"},
+  {"image": "ho_009.jpg", "jersey_number": "30", "difficulty": "easy", "notes": "Warriors #30 driving, single main player"},
+  {"image": "ho_010.jpg", "jersey_number": "13", "difficulty": "easy", "notes": "Suns #13 bringing ball up, single player"},
+  {"image": "ho_011.jpg", "jersey_number": "20", "difficulty": "easy", "notes": "Celtics #20 shooting, single player"},
+  {"image": "ho_012.jpg", "jersey_number": "34", "difficulty": "medium", "notes": "Suns #34 free throw close-up; bottom of number cut off by frame"},
+  {"image": "ho_013.jpg", "jersey_number": "23,45", "difficulty": "hard", "notes": "All-Star East #23 drive, West #45 reaching, 4+ players; decorative red/blue border"},
+  {"image": "ho_014.jpg", "jersey_number": "44,22", "difficulty": "medium", "notes": "West All-Star #44 with #22 behind; #13 in background partly visible; decorative border"},
+  {"image": "ho_015.jpg", "jersey_number": "18", "difficulty": "easy", "notes": "Celtics #18 rebound, single player, vintage; decorative border"},
+  {"image": "ho_016.jpg", "jersey_number": "33", "difficulty": "hard", "notes": "Black-and-white Celtics vs Rodman tangle; #33 visible, other numbers occluded"},
+  {"image": "ho_017.jpg", "jersey_number": "44,32", "difficulty": "medium", "notes": "Jazz #44 vs Warriors #32, low-res video frame"},
+  {"image": "ho_018.jpg", "jersey_number": "6,17", "difficulty": "medium", "notes": "Celtics #6 and #17 walking; signed photo, autograph text contains #6"},
+  {"image": "ho_019.jpg", "jersey_number": "00,33", "difficulty": "medium", "notes": "Celtics #00 guarding Lakers #33; ball partly covers #33"},
+  {"image": "ho_020.jpg", "jersey_number": "10", "difficulty": "medium", "notes": "Pacers #10 driving, vintage; defender's number hidden"}
+]
