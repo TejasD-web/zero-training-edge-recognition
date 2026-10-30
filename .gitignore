@@ -37,3 +37,5 @@ data/heldout/images/*.jpg
 data/heldout/images/*.jpeg
 data/heldout/images/*.png
 !results/logprob_probe_*.json
+results/queue/
+!results/sync_*.jsonl

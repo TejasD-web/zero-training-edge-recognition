@@ -16,8 +16,14 @@ Usage (fresh boot; the script starts and stops llama-server itself):
   python router/route.py --manifest --policy agreement       # original cascade
   python router/route.py --manifest --max-tier 1             # offline mode: never call the cloud
   python router/route.py --manifest data/heldout/manifest.json --image-dir data/heldout/images
+
+Read now, verify later (confidence policy):
+  Low-confidence frames are QUEUED (edge answer kept, marked unverified) when running offline
+  (--max-tier 1) or when the Meta Model API is unreachable. Later, with a connection:
+  python router/route.py --sync           # send only queued frames to Muse Spark; confirm or correct
+  python router/route.py --clear-queue    # reset the queue (e.g. before a demo)
 """
-import os, sys, json, time, argparse
+import os, sys, json, time, argparse, shutil, socket
 from datetime import datetime
 from PIL import Image
 
@@ -30,6 +36,78 @@ from router import meta_client as mc        # SAM 3.1 + Muse Spark
 from benchmark import logprob_probe as lp    # logprob query + confidence
 
 CONF_THRESHOLD = 0.9   # pre-registered in data/heldout/RUBRIC.md; do not tune on held-out results
+QUEUE_DIR = os.path.join(rb.RESULTS_DIR, "queue")
+QUEUE_FILE = os.path.join(QUEUE_DIR, "queue.jsonl")
+
+def cloud_available(host="api.meta.ai", port=443, timeout=2.0):
+    """Fast reachability check so a dropped link costs ~2s, not a 90s request timeout."""
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
+
+def enqueue(image_path, rec, truth=None):
+    os.makedirs(os.path.join(QUEUE_DIR, "images"), exist_ok=True)
+    dst = os.path.join(QUEUE_DIR, "images", rec["image"])
+    shutil.copy2(image_path, dst)
+    entry = {"image": rec["image"], "path": dst, "edge_answer": rec["answer"],
+             "edge_conf": (rec.get("edge_conf") or {}).get("joint"), "truth": truth,
+             "bytes": os.path.getsize(dst), "status": "unverified",
+             "queued_at": datetime.now().isoformat(timespec="seconds")}
+    with open(QUEUE_FILE, "a") as f:
+        f.write(json.dumps(entry) + "\n")
+    rec["queued"] = True
+
+def sync():
+    """Send only queued (unverified) frames to Muse Spark; confirm or correct the edge answers."""
+    if not os.path.exists(QUEUE_FILE):
+        print("[SYNC] Queue is empty.")
+        return
+    entries = [json.loads(l) for l in open(QUEUE_FILE) if l.strip()]
+    pending = [e for e in entries if e["status"] == "unverified"]
+    if not pending:
+        print(f"[SYNC] Nothing pending ({len(entries)} already verified).")
+        return
+    if not cloud_available():
+        sys.exit(f"[SYNC] Meta Model API unreachable; {len(pending)} frames stay queued. Try again later.")
+    print(f"[SYNC] Connection OK. Verifying {len(pending)} queued frames with Muse Spark...")
+    up_bytes = corrected = 0
+    for e in pending:
+        try:
+            raw, t = mc.muse_read(e["path"])
+        except Exception as ex:
+            print(f"[SYNC] {e['image']}: ERROR {str(ex)[:120]} (stays queued)")
+            continue
+        ans = rb.normalize(raw)
+        e.update({"status": "verified", "cloud_answer": ans, "cloud_latency_s": t,
+                  "corrected": ans != e["edge_answer"], "verified_at": datetime.now().isoformat(timespec="seconds")})
+        up_bytes += e["bytes"]
+        corrected += e["corrected"]
+        mark = ""
+        if e.get("truth"):
+            e["edge_correct"] = rb.score(e["edge_answer"] or "", e["truth"])[0]
+            e["correct"] = rb.score(ans or "", e["truth"])[0]
+            mark = f"  truth={e['truth']} edge {'✓' if e['edge_correct'] else '✗'} -> final {'✓' if e['correct'] else '✗'}"
+        verb = ("FIXED" if e.get("edge_correct") is False else "changed") if e["corrected"] else "confirmed"
+        print(f"[SYNC] {e['image']}: edge {e['edge_answer']} (conf {e['edge_conf']}) -> Muse {ans}  {verb}  {t}s{mark}")
+    with open(QUEUE_FILE, "w") as f:
+        for e in entries:
+            f.write(json.dumps(e) + "\n")
+    done_now = [e for e in pending if e["status"] == "verified"]
+    print(f"\n{'=' * 60}\nSYNC SUMMARY")
+    print(f"  verified           {len(done_now)}/{len(pending)} queued frames")
+    print(f"  edge confirmed     {len(done_now) - corrected}")
+    print(f"  answer changed     {corrected}")
+    fixed = sum(1 for e in done_now if e.get("edge_correct") is False and e.get("correct"))
+    if any("correct" in e for e in done_now):
+        print(f"  edge errors fixed  {fixed}")
+    print(f"  uploaded           {up_bytes / 1e6:.2f} MB ({len(done_now)} images)")
+    scored = [e for e in done_now if "correct" in e]
+    if scored:
+        print(f"  accuracy on queued frames: edge {sum(e['edge_correct'] for e in scored)}/{len(scored)}"
+              f" -> after sync {sum(e['correct'] for e in scored)}/{len(scored)}")
+    print("=" * 60)
 
 def edge_read(image_path):
     raw, t = rb.query_vlm(rb.prep_read(image_path))
@@ -60,7 +138,8 @@ def muse_tier(image_path, rec, step, done, fallback):
         return done(3, p_muse, "escalated to Muse Spark")
     except Exception as e:
         step("muse_full", None, None, error=str(e)[:200])
-        return done(3, fallback, "LOW CONFIDENCE: Muse call failed, falling back to edge full-frame read")
+        rec["needs_queue"] = True
+        return done(3, fallback, "LOW CONFIDENCE: Muse call failed; edge answer kept, queued for verification")
 
 def route_confidence(image_path, max_tier=3, threshold=CONF_THRESHOLD):
     """Tier 1: edge read with its own token probability. Confident → answer. Else → Muse Spark."""
@@ -72,7 +151,11 @@ def route_confidence(image_path, max_tier=3, threshold=CONF_THRESHOLD):
     if p_full is not None and conf["joint"] >= threshold:
         return done(1, p_full, f"edge confidence {conf['joint']:.3f} >= {threshold}")
     if max_tier < 3:
-        return done(1, p_full, f"LOW CONFIDENCE: edge confidence {conf['joint']:.3f} < {threshold}, cloud disabled (offline mode)")
+        rec["needs_queue"] = True
+        return done(1, p_full, f"LOW CONFIDENCE: edge confidence {conf['joint']:.3f} < {threshold}, offline; queued for verification")
+    if not cloud_available():
+        rec["needs_queue"] = True
+        return done(1, p_full, f"LOW CONFIDENCE: edge confidence {conf['joint']:.3f} < {threshold}, no connection; queued for verification")
     return muse_tier(image_path, rec, step, done, p_full)
 
 def route_agreement(image_path, max_tier=3):
@@ -135,7 +218,7 @@ def print_record(rec, truth=None):
         mark = f"  truth={truth} {'✓' if ok else '✗'}"
     where = "on-device" if not rec["left_device"] else f"cloud: {rec['sam3_calls']} SAM 3.1, {rec['muse_calls']} Muse"
     print(f"[ROUTE] {rec['image']}: answer={rec['answer']}  tier {rec['tier']} ({where})  {rec['total_s']}s{mark}")
-    print(f"        {rec['reason']}")
+    print(f"        {rec['reason']}" + ("  [QUEUED]" if rec.get("queued") else ""))
     for s in rec["steps"]:
         bits = [f"pred={s['pred']}" if s.get("pred") is not None else "",
                 f"box={s['box']}" if s.get("box") else "",
@@ -161,6 +244,9 @@ def summarize(records):
         acc = f" ({sum(r['correct'] for r in lc)}/{len(lc)} correct)" if lc else ""
         print(f"  low-confidence     {len(low)}/{n}{acc}")
     print(f"  stayed on-device   {sum(not r['left_device'] for r in records)}/{n}")
+    q = sum(bool(r.get("queued")) for r in records)
+    if q:
+        print(f"  queued for sync    {q}  (run: python router/route.py --sync)")
     print(f"  SAM 3.1 calls      {sum(r['sam3_calls'] for r in records)}")
     print(f"  Muse Spark calls   {sum(r['muse_calls'] for r in records)}")
     print(f"  latency            mean {sum(lat) / n:.1f}s  p50 {lat[n // 2]:.1f}s  max {lat[-1]:.1f}s")
@@ -173,7 +259,17 @@ def main():
     ap.add_argument("--image-dir", default=rb.IMAGE_DIR)
     ap.add_argument("--max-tier", type=int, default=3, choices=[1, 2, 3], help="1 = offline, 2 = no Muse")
     ap.add_argument("--policy", default="confidence", choices=["confidence", "agreement"])
+    ap.add_argument("--sync", action="store_true", help="verify queued frames with Muse Spark (no edge server needed)")
+    ap.add_argument("--clear-queue", action="store_true", help="delete the offline queue")
     args = ap.parse_args()
+
+    if args.clear_queue:
+        shutil.rmtree(QUEUE_DIR, ignore_errors=True)
+        print("[QUEUE] cleared")
+        return
+    if args.sync:
+        sync()
+        return
 
     jobs = []
     if args.manifest:
@@ -199,6 +295,8 @@ def main():
                 break
             rec = route(path, max_tier=args.max_tier, policy=args.policy)
             rec["policy"] = args.policy
+            if rec.get("needs_queue"):
+                enqueue(path, rec, truth)
             print_record(rec, truth)
             records.append(rec)
     finally:
