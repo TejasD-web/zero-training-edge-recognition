@@ -1,10 +1,10 @@
 """
-Benchmark harness: VLM server (first, on clean CMA) → [grounding] → SAM batch (one process) → score.
+Benchmark harness: VLM server (started first) → [grounding] → SAM batch (one process) → score.
 Usage:
   python benchmark/run_benchmark.py                          # center-point SAM crop only
   python benchmark/run_benchmark.py --baseline               # + full image (no SAM)
   python benchmark/run_benchmark.py --baseline --grounding   # + Qwen box crop, + Qwen box → SAM crop
-Reboot before each full run so CMA starts clean (r36.4.7 leaks CMA per process exit).
+Needs ~4.5 GB MemAvailable; if lower, run: sync && sudo sysctl -w vm.drop_caches=3 (no reboot needed).
 """
 import sys, os, re, json, time, base64, subprocess, statistics, argparse
 from datetime import datetime
@@ -20,7 +20,7 @@ VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.g
 VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
 VLM_URL = "http://localhost:8080/v1/chat/completions"
 SAM_DEVICE = "cpu"   # "cpu" = fallback if SAM can't share GPU with the server
-VLM_NGL = "5"        # 99 starves the 433 MB vision buffer of CMA
+VLM_NGL = "5"        # 5 layers on GPU: the validated v1 setting. Higher values untested since the -lm dio fix.
 PROMPT = "What jersey number is the player wearing? Reply with ONLY the number, nothing else."
 GROUND_PROMPT = ("Locate the jersey number of the player whose number is most clearly visible. "
                  'Output its bounding box as JSON: {"bbox_2d": [x1, y1, x2, y2]}')
@@ -359,13 +359,13 @@ def main():
     manifest = load_manifest()
     image_paths = [os.path.join(IMAGE_DIR, m["image"]) for m in manifest]
 
-    # 0. Guard: llama-server needs fresh CMA (r36.4.7 leaks it on every process exit)
-    cma_free = next(int(l.split()[1]) for l in open("/proc/meminfo") if l.startswith("CmaFree"))
-    if cma_free < 900_000:
-        sys.exit(f"[CMA] Only {cma_free // 1024} MB free (need ~900+). Reboot first: sudo reboot")
-    print(f"[CMA] {cma_free // 1024} MB free")
+    # 0. Guard: GPU allocs (nvmap, not CMA) fail rather than evict page cache, so start with headroom
+    mem_avail = next(int(l.split()[1]) for l in open("/proc/meminfo") if l.startswith("MemAvailable"))
+    if mem_avail < 4_500_000:
+        sys.exit(f"[MEM] Only {mem_avail // 1024} MB available (need ~4.5 GB). Drop caches first: sync && sudo sysctl -w vm.drop_caches=3")
+    print(f"[MEM] {mem_avail // 1024} MB available")
 
-    # 1. VLM first — grab clean CMA before SAM fragments it
+    # 1. VLM first: allocate its GPU buffers before SAM’s process adds memory pressure.
     vlm_proc, server_startup = start_vlm_server()
     rows, sam_load_time, boxes = [], None, {}
     try:

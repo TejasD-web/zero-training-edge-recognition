@@ -282,9 +282,9 @@ def main():
     if not jobs:
         ap.error("give image paths or --manifest")
 
-    cma_free = next(int(l.split()[1]) for l in open("/proc/meminfo") if l.startswith("CmaFree"))
-    if cma_free < 900_000:
-        sys.exit(f"[CMA] Only {cma_free // 1024} MB free (need ~900+). Reboot first: sudo reboot")
+    mem_avail = next(int(l.split()[1]) for l in open("/proc/meminfo") if l.startswith("MemAvailable"))
+    if mem_avail < 4_500_000:
+        sys.exit(f"[MEM] Only {mem_avail // 1024} MB available (need ~4.5 GB). Drop caches first: sync && sudo sysctl -w vm.drop_caches=3")
 
     proc, _ = rb.start_vlm_server()
     records = []
