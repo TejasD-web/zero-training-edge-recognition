@@ -20,7 +20,7 @@ VLM_MODEL = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-q4_k_m.g
 VLM_MMPROJ = "/mnt/nvme/models/qwen2.5-vl-3b-gguf/Qwen2.5-VL-3B-Instruct-mmproj-q8_0.gguf"
 VLM_URL = "http://localhost:8080/v1/chat/completions"
 SAM_DEVICE = "cpu"   # "cpu" = fallback if SAM can't share GPU with the server
-VLM_NGL = "5"        # 5 layers on GPU: the validated v1 setting. Higher values untested since the -lm dio fix.
+VLM_NGL = "99"       # v2: all layers on GPU (works since -lm dio fix); v1 used "5"
 PROMPT = "What jersey number is the player wearing? Reply with ONLY the number, nothing else."
 GROUND_PROMPT = ("Locate the jersey number of the player whose number is most clearly visible. "
                  'Output its bounding box as JSON: {"bbox_2d": [x1, y1, x2, y2]}')
