@@ -1,0 +1,1040 @@
+{
+  "policy": "agreement",
+  "threshold": null,
+  "max_tier": 3,
+  "manifest": "data/heldout/manifest.json",
+  "records": [
+    {
+      "image": "ho_001.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "1",
+          "latency_s": 3.961,
+          "raw": "1"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.29,
+          "box": [
+            121,
+            369,
+            205,
+            458
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "4",
+          "latency_s": 2.506,
+          "raw": "4"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.557,
+          "n_boxes": 2
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "4",
+          "latency_s": 2.544,
+          "raw": "4",
+          "box": [
+            185,
+            336,
+            221,
+            371
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "11",
+          "latency_s": 2.502,
+          "raw": "11"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "11",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 22.56,
+      "policy": "agreement",
+      "truth": "11,44",
+      "correct": true
+    },
+    {
+      "image": "ho_002.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "3",
+          "latency_s": 2.579,
+          "raw": "3"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.31,
+          "box": [
+            125,
+            434,
+            147,
+            474
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "5",
+          "latency_s": 2.504,
+          "raw": "5"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.181,
+          "n_boxes": 3
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "3",
+          "latency_s": 2.519,
+          "raw": "3",
+          "box": [
+            406,
+            258,
+            439,
+            298
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "3",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 19.231,
+      "policy": "agreement",
+      "truth": "45,3",
+      "correct": true
+    },
+    {
+      "image": "ho_003.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "10",
+          "latency_s": 2.702,
+          "raw": "10"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.016,
+          "box": [
+            398,
+            370,
+            431,
+            405
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "40",
+          "latency_s": 2.638,
+          "raw": "40"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 2.295,
+          "n_boxes": 6
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "40",
+          "latency_s": 2.705,
+          "raw": "40",
+          "box": [
+            426,
+            356,
+            465,
+            391
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "40",
+          "latency_s": 3.969,
+          "raw": "40"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "40",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 22.514,
+      "policy": "agreement",
+      "truth": "40,42,10",
+      "correct": true
+    },
+    {
+      "image": "ho_004.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "33",
+          "latency_s": 2.682,
+          "raw": "33"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.037,
+          "box": [
+            273,
+            340,
+            316,
+            415
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "5",
+          "latency_s": 2.585,
+          "raw": "5"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.694,
+          "n_boxes": 3
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "5",
+          "latency_s": 2.66,
+          "raw": "5",
+          "box": [
+            441,
+            392,
+            498,
+            449
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "33",
+          "latency_s": 2.297,
+          "raw": "33"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "33",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 22.139,
+      "policy": "agreement",
+      "truth": "33",
+      "correct": true
+    },
+    {
+      "image": "ho_005.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "30",
+          "latency_s": 2.645,
+          "raw": "30"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.338,
+          "box": [
+            262,
+            512,
+            285,
+            535
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "3",
+          "latency_s": 2.577,
+          "raw": "3"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.62,
+          "n_boxes": 5
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "30",
+          "latency_s": 2.652,
+          "raw": "30",
+          "box": [
+            495,
+            372,
+            515,
+            390
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "30",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 17.991,
+      "policy": "agreement",
+      "truth": "31,13,3,30,16",
+      "correct": true
+    },
+    {
+      "image": "ho_006.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "0",
+          "latency_s": 2.479,
+          "raw": "0"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.166,
+          "box": [
+            246,
+            337,
+            348,
+            432
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "0",
+          "latency_s": 2.527,
+          "raw": "0"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "0",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.266,
+      "policy": "agreement",
+      "truth": "0,10",
+      "correct": true
+    },
+    {
+      "image": "ho_007.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "10",
+          "latency_s": 2.685,
+          "raw": "10"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.075,
+          "box": [
+            304,
+            145,
+            333,
+            184
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.631,
+          "raw": "10"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "10",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.482,
+      "policy": "agreement",
+      "truth": "10",
+      "correct": true
+    },
+    {
+      "image": "ho_008.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "15",
+          "latency_s": 2.587,
+          "raw": "15"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.173,
+          "box": [
+            193,
+            115,
+            283,
+            216
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "15",
+          "latency_s": 2.601,
+          "raw": "15"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "15",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 14.467,
+      "policy": "agreement",
+      "truth": "15,32",
+      "correct": true
+    },
+    {
+      "image": "ho_009.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "35",
+          "latency_s": 2.622,
+          "raw": "35"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.924,
+          "box": [
+            244,
+            222,
+            327,
+            378
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "30",
+          "latency_s": 2.7,
+          "raw": "30"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.705,
+          "n_boxes": 0
+        },
+        {
+          "step": "muse_full",
+          "pred": "30",
+          "latency_s": 1.32,
+          "raw": "30"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "30",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 17.394,
+      "policy": "agreement",
+      "truth": "30",
+      "correct": true
+    },
+    {
+      "image": "ho_010.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "13",
+          "latency_s": 2.81,
+          "raw": "13"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.369,
+          "box": [
+            254,
+            362,
+            320,
+            418
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "2",
+          "latency_s": 2.559,
+          "raw": "2"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.784,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "13",
+          "latency_s": 2.605,
+          "raw": "13",
+          "box": [
+            294,
+            144,
+            319,
+            166
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "13",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 19.257,
+      "policy": "agreement",
+      "truth": "13",
+      "correct": true
+    },
+    {
+      "image": "ho_011.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "20",
+          "latency_s": 2.674,
+          "raw": "20"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.992,
+          "box": [
+            185,
+            204,
+            212,
+            254
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "20",
+          "latency_s": 2.645,
+          "raw": "20"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "20",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 15.405,
+      "policy": "agreement",
+      "truth": "20",
+      "correct": true
+    },
+    {
+      "image": "ho_012.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "34",
+          "latency_s": 2.671,
+          "raw": "34"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.041,
+          "box": [
+            111,
+            49,
+            132,
+            74
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "2",
+          "latency_s": 2.492,
+          "raw": "2"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.757,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "24",
+          "latency_s": 2.612,
+          "raw": "24",
+          "box": [
+            115,
+            552,
+            217,
+            612
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "34",
+          "latency_s": 1.098,
+          "raw": "34"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "34",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 18.798,
+      "policy": "agreement",
+      "truth": "34",
+      "correct": true
+    },
+    {
+      "image": "ho_013.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "2",
+          "latency_s": 2.651,
+          "raw": "2"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 9.272,
+          "box": [
+            220,
+            204,
+            248,
+            239
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.661,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.829,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "10",
+          "latency_s": 2.678,
+          "raw": "10",
+          "box": [
+            291,
+            173,
+            326,
+            198
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "23",
+          "latency_s": 1.321,
+          "raw": "23"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "23",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 19.569,
+      "policy": "agreement",
+      "truth": "23,45",
+      "correct": true
+    },
+    {
+      "image": "ho_014.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "4",
+          "latency_s": 2.58,
+          "raw": "4"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.345,
+          "box": [
+            312,
+            153,
+            414,
+            254
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "4",
+          "latency_s": 2.494,
+          "raw": "4"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "4",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.532,
+      "policy": "agreement",
+      "truth": "44,22",
+      "correct": false
+    },
+    {
+      "image": "ho_015.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "2",
+          "latency_s": 2.57,
+          "raw": "2"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.294,
+          "box": [
+            469,
+            145,
+            492,
+            166
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.602,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 2.108,
+          "n_boxes": 1
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "10",
+          "latency_s": 2.639,
+          "raw": "10",
+          "box": [
+            400,
+            256,
+            484,
+            326
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "18",
+          "latency_s": 1.28,
+          "raw": "18"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "18",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 19.635,
+      "policy": "agreement",
+      "truth": "18",
+      "correct": true
+    },
+    {
+      "image": "ho_016.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "10",
+          "latency_s": 2.601,
+          "raw": "10"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.365,
+          "box": [
+            49,
+            105,
+            59,
+            130
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.596,
+          "raw": "10"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "10",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.636,
+      "policy": "agreement",
+      "truth": "33",
+      "correct": false
+    },
+    {
+      "image": "ho_017.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "4",
+          "latency_s": 2.525,
+          "raw": "4"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.223,
+          "box": [
+            117,
+            179,
+            142,
+            220
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.606,
+          "raw": "10"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 0.894,
+          "n_boxes": 2
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "4",
+          "latency_s": 2.538,
+          "raw": "4",
+          "box": [
+            78,
+            247,
+            108,
+            263
+          ]
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 0,
+      "tier": 2,
+      "answer": "4",
+      "reason": "SAM 3.1 crop read on edge agrees with full-frame read",
+      "confident": true,
+      "left_device": true,
+      "total_s": 16.87,
+      "policy": "agreement",
+      "truth": "44,32",
+      "correct": false
+    },
+    {
+      "image": "ho_018.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "17",
+          "latency_s": 2.637,
+          "raw": "17"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.045,
+          "box": [
+            452,
+            423,
+            517,
+            487
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "17",
+          "latency_s": 2.587,
+          "raw": "17"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "17",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.384,
+      "policy": "agreement",
+      "truth": "6,17",
+      "correct": true
+    },
+    {
+      "image": "ho_019.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "3",
+          "latency_s": 2.524,
+          "raw": "3"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 10.12,
+          "box": [
+            61,
+            271,
+            85,
+            318
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "34",
+          "latency_s": 2.584,
+          "raw": "34"
+        },
+        {
+          "step": "sam3_locate",
+          "pred": null,
+          "latency_s": 1.044,
+          "n_boxes": 2
+        },
+        {
+          "step": "edge_read_sam3_crop",
+          "pred": "2",
+          "latency_s": 2.509,
+          "raw": "2",
+          "box": [
+            230,
+            296,
+            301,
+            346
+          ]
+        },
+        {
+          "step": "muse_full",
+          "pred": "33",
+          "latency_s": 1.818,
+          "raw": "33"
+        }
+      ],
+      "sam3_calls": 1,
+      "muse_calls": 1,
+      "tier": 3,
+      "answer": "33",
+      "reason": "escalated to Muse Spark",
+      "confident": true,
+      "left_device": true,
+      "total_s": 20.726,
+      "policy": "agreement",
+      "truth": "00,33",
+      "correct": true
+    },
+    {
+      "image": "ho_020.jpg",
+      "steps": [
+        {
+          "step": "edge_full",
+          "pred": "10",
+          "latency_s": 2.685,
+          "raw": "10"
+        },
+        {
+          "step": "edge_ground",
+          "pred": null,
+          "latency_s": 8.262,
+          "box": [
+            299,
+            631,
+            324,
+            661
+          ]
+        },
+        {
+          "step": "edge_box_read",
+          "pred": "10",
+          "latency_s": 2.623,
+          "raw": "10"
+        }
+      ],
+      "sam3_calls": 0,
+      "muse_calls": 0,
+      "tier": 1,
+      "answer": "10",
+      "reason": "edge full-frame and grounded-crop reads agree",
+      "confident": true,
+      "left_device": false,
+      "total_s": 13.702,
+      "policy": "agreement",
+      "truth": "10",
+      "correct": true
+    }
+  ]
+}
