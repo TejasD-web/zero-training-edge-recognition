@@ -1,0 +1,1515 @@
+{
+  "summary": {
+    "timestamp": "2026-10-28T20:36:43",
+    "config": {
+      "order": "vlm_first",
+      "sam_device": "cpu",
+      "vlm_ngl": "5",
+      "image_tokens": "read=256 (equalized), ground~1000",
+      "ubatch": 1024,
+      "ctx_size": 1536,
+      "prompt": "What jersey number is the player wearing? Reply with ONLY the number, nothing else.",
+      "ground_prompt": "Locate the jersey number of the player whose number is most clearly visible. Output its bounding box as JSON: {\"bbox_2d\": [x1, y1, x2, y2]}",
+      "ground_target_tokens": 1000,
+      "cloud_models": "sam-3.1 + muse-spark-1.3",
+      "sam_load_time_s": 1.463,
+      "vlm_server_startup_s": 7.07
+    },
+    "sam_crop": {
+      "accuracy": 0.294,
+      "correct": 5,
+      "answered": 17,
+      "missing": 0,
+      "by_difficulty": {
+        "easy": "1/7",
+        "hard": "1/5",
+        "medium": "3/5"
+      },
+      "vlm_latency_mean_s": 15.287,
+      "vlm_latency_p50_s": 15.228
+    },
+    "full_image": {
+      "accuracy": 0.706,
+      "correct": 12,
+      "answered": 17,
+      "missing": 0,
+      "by_difficulty": {
+        "easy": "6/7",
+        "hard": "4/5",
+        "medium": "2/5"
+      },
+      "vlm_latency_mean_s": 15.673,
+      "vlm_latency_p50_s": 15.919
+    },
+    "vlm_box": {
+      "accuracy": 0.471,
+      "correct": 8,
+      "answered": 16,
+      "missing": 1,
+      "by_difficulty": {
+        "easy": "4/7",
+        "hard": "2/4",
+        "medium": "2/5"
+      },
+      "vlm_latency_mean_s": 15.25,
+      "vlm_latency_p50_s": 15.157
+    },
+    "vlm_box_sam": {
+      "accuracy": 0.294,
+      "correct": 5,
+      "answered": 16,
+      "missing": 1,
+      "by_difficulty": {
+        "easy": "2/7",
+        "hard": "1/4",
+        "medium": "2/5"
+      },
+      "vlm_latency_mean_s": 15.27,
+      "vlm_latency_p50_s": 15.215
+    },
+    "muse_full": {
+      "accuracy": 1.0,
+      "correct": 17,
+      "answered": 17,
+      "missing": 0,
+      "by_difficulty": {
+        "easy": "7/7",
+        "hard": "5/5",
+        "medium": "5/5"
+      },
+      "vlm_latency_mean_s": 2.278,
+      "vlm_latency_p50_s": 2.23
+    },
+    "cloud_sam_edge_read": {
+      "accuracy": 0.765,
+      "correct": 13,
+      "answered": 17,
+      "missing": 0,
+      "by_difficulty": {
+        "easy": "6/7",
+        "hard": "3/5",
+        "medium": "4/5"
+      },
+      "vlm_latency_mean_s": 15.46,
+      "vlm_latency_p50_s": 15.293
+    },
+    "cloud_sam_muse": {
+      "accuracy": 0.882,
+      "correct": 15,
+      "answered": 17,
+      "missing": 0,
+      "by_difficulty": {
+        "easy": "7/7",
+        "hard": "4/5",
+        "medium": "4/5"
+      },
+      "vlm_latency_mean_s": 1.801,
+      "vlm_latency_p50_s": 1.442
+    }
+  },
+  "rows": [
+    {
+      "image": "img_001.jpg",
+      "truth": "31",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "3",
+        "pred": "3",
+        "correct": false,
+        "vlm_time_s": 15.238,
+        "crop_size": "420x530",
+        "sam_seg_time_s": 17.629
+      },
+      "full_image": {
+        "raw": "31",
+        "pred": "31",
+        "correct": true,
+        "vlm_time_s": 16.093
+      },
+      "grounding": {
+        "box": [
+          624,
+          569,
+          889,
+          769
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [320, 296, 456, 400],\n    \"label\": \"jersey number\"\n}\n```",
+        "ground_time_s": 84.333
+      },
+      "vlm_box": {
+        "raw": "31",
+        "pred": "31",
+        "correct": true,
+        "vlm_time_s": 14.974,
+        "crop_size": "529x400",
+        "ground_time_s": 84.333
+      },
+      "vlm_box_sam": {
+        "raw": "23",
+        "pred": "23",
+        "correct": false,
+        "vlm_time_s": 15.378,
+        "crop_size": "329x240",
+        "box_score": 0.6665,
+        "ground_time_s": 84.333
+      },
+      "muse_full": {
+        "raw": "31",
+        "pred": "31",
+        "correct": true,
+        "vlm_time_s": 2.342
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            695,
+            771,
+            872,
+            889
+          ]
+        ],
+        "sam_time_s": 0.897
+      },
+      "cloud_sam_edge_read": {
+        "raw": "31",
+        "pred": "31",
+        "correct": true,
+        "vlm_time_s": 16.037,
+        "crop_size": "353x236",
+        "sam_time_s": 0.897,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "31",
+        "pred": "31",
+        "correct": true,
+        "vlm_time_s": 1.218,
+        "crop_size": "353x236",
+        "sam_time_s": 0.897,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_002.jpg",
+      "truth": "24",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "64",
+        "pred": "64",
+        "correct": false,
+        "vlm_time_s": 15.228,
+        "crop_size": "460x516",
+        "sam_seg_time_s": 15.688
+      },
+      "full_image": {
+        "raw": "24",
+        "pred": "24",
+        "correct": true,
+        "vlm_time_s": 16.076
+      },
+      "grounding": {
+        "box": [
+          602,
+          731,
+          683,
+          800
+        ],
+        "raw": "```json\n{\n  \"bbox_2d\": [309, 380, 350, 416]\n}\n```",
+        "ground_time_s": 83.341
+      },
+      "vlm_box": {
+        "raw": "2",
+        "pred": "2",
+        "correct": false,
+        "vlm_time_s": 15.103,
+        "crop_size": "161x137",
+        "ground_time_s": 83.341
+      },
+      "vlm_box_sam": {
+        "raw": "20",
+        "pred": "20",
+        "correct": false,
+        "vlm_time_s": 15.109,
+        "crop_size": "135x101",
+        "box_score": 0.8733,
+        "ground_time_s": 83.341
+      },
+      "muse_full": {
+        "raw": "24",
+        "pred": "24",
+        "correct": true,
+        "vlm_time_s": 2.408
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            602,
+            784,
+            775,
+            918
+          ]
+        ],
+        "sam_time_s": 1.697
+      },
+      "cloud_sam_edge_read": {
+        "raw": "24",
+        "pred": "24",
+        "correct": true,
+        "vlm_time_s": 16.306,
+        "crop_size": "345x268",
+        "sam_time_s": 1.697,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "24",
+        "pred": "24",
+        "correct": true,
+        "vlm_time_s": 1.194,
+        "crop_size": "345x268",
+        "sam_time_s": 1.697,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_003.jpg",
+      "truth": "8",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 15.118,
+        "crop_size": "304x324",
+        "sam_seg_time_s": 13.861
+      },
+      "full_image": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 15.919
+      },
+      "grounding": {
+        "box": [
+          207,
+          260,
+          317,
+          368
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [302, 382, 462, 540]\n}\n```",
+        "ground_time_s": 84.955
+      },
+      "vlm_box": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 15.122,
+        "crop_size": "220x216",
+        "ground_time_s": 84.955
+      },
+      "vlm_box_sam": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 15.113,
+        "crop_size": "132x138",
+        "box_score": 0.7675,
+        "ground_time_s": 84.955
+      },
+      "muse_full": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 2.632
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            236,
+            286,
+            288,
+            364
+          ]
+        ],
+        "sam_time_s": 1.043
+      },
+      "cloud_sam_edge_read": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 15.921,
+        "crop_size": "104x156",
+        "sam_time_s": 1.043,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "8",
+        "pred": "8",
+        "correct": true,
+        "vlm_time_s": 1.967,
+        "crop_size": "104x156",
+        "sam_time_s": 1.043,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_004.jpg",
+      "truth": "25",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "2",
+        "pred": "2",
+        "correct": false,
+        "vlm_time_s": 15.124,
+        "crop_size": "89x98",
+        "sam_seg_time_s": 11.232
+      },
+      "full_image": {
+        "raw": "25",
+        "pred": "25",
+        "correct": true,
+        "vlm_time_s": 16.134
+      },
+      "grounding": {
+        "box": [
+          374,
+          552,
+          663,
+          768
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [192, 287, 340, 399],\n    \"label\": \"jersey number\"\n}\n```",
+        "ground_time_s": 84.315
+      },
+      "vlm_box": {
+        "raw": "25",
+        "pred": "25",
+        "correct": true,
+        "vlm_time_s": 14.959,
+        "crop_size": "577x432",
+        "ground_time_s": 84.315
+      },
+      "vlm_box_sam": {
+        "raw": "25",
+        "pred": "25",
+        "correct": true,
+        "vlm_time_s": 15.369,
+        "crop_size": "357x285",
+        "box_score": 0.7307,
+        "ground_time_s": 84.315
+      },
+      "muse_full": {
+        "raw": "25",
+        "pred": "25",
+        "correct": true,
+        "vlm_time_s": 1.777
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            486,
+            606,
+            675,
+            748
+          ]
+        ],
+        "sam_time_s": 1.609
+      },
+      "cloud_sam_edge_read": {
+        "raw": "25",
+        "pred": "25",
+        "correct": true,
+        "vlm_time_s": 15.025,
+        "crop_size": "377x284",
+        "sam_time_s": 1.609,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "25",
+        "pred": "25",
+        "correct": true,
+        "vlm_time_s": 1.652,
+        "crop_size": "377x284",
+        "sam_time_s": 1.609,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_005.jpg",
+      "truth": "9",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.416,
+        "crop_size": "140x175",
+        "sam_seg_time_s": 15.577
+      },
+      "full_image": {
+        "raw": "9",
+        "pred": "9",
+        "correct": true,
+        "vlm_time_s": 15.912
+      },
+      "grounding": {
+        "box": [
+          295,
+          203,
+          325,
+          238
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [414, 289, 456, 339],\n    \"label\": \"jersey number of the player whose number is most clearly visible.\"\n}\n```",
+        "ground_time_s": 85.59
+      },
+      "vlm_box": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.166,
+        "crop_size": "94x99",
+        "ground_time_s": 85.59
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.134,
+        "crop_size": "38x41",
+        "box_score": 0.7063,
+        "ground_time_s": 85.59
+      },
+      "muse_full": {
+        "raw": "9",
+        "pred": "9",
+        "correct": true,
+        "vlm_time_s": 1.315
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            285,
+            299,
+            320,
+            342
+          ]
+        ],
+        "sam_time_s": 1.169
+      },
+      "cloud_sam_edge_read": {
+        "raw": "9",
+        "pred": "9",
+        "correct": true,
+        "vlm_time_s": 15.19,
+        "crop_size": "83x91",
+        "sam_time_s": 1.169,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "9",
+        "pred": "9",
+        "correct": true,
+        "vlm_time_s": 2.068,
+        "crop_size": "83x91",
+        "sam_time_s": 1.169,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_006.jpg",
+      "truth": "23",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "17",
+        "pred": "17",
+        "correct": false,
+        "vlm_time_s": 16.011,
+        "crop_size": "2048x1431",
+        "sam_seg_time_s": 15.932
+      },
+      "full_image": {
+        "raw": "17",
+        "pred": "17",
+        "correct": false,
+        "vlm_time_s": 16.063
+      },
+      "grounding": {
+        "box": [
+          1051,
+          368,
+          1107,
+          447
+        ],
+        "raw": "```json\n{\n  \"bbox_2d\": [532, 187, 560, 227]\n}\n```",
+        "ground_time_s": 84.783
+      },
+      "vlm_box": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 14.96,
+        "crop_size": "120x157",
+        "ground_time_s": 84.783
+      },
+      "vlm_box_sam": {
+        "raw": "11",
+        "pred": "11",
+        "correct": false,
+        "vlm_time_s": 15.343,
+        "crop_size": "86x108",
+        "box_score": 0.9065,
+        "ground_time_s": 84.783
+      },
+      "muse_full": {
+        "raw": "23",
+        "pred": "23",
+        "correct": true,
+        "vlm_time_s": 1.625
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            1124,
+            365,
+            1188,
+            445
+          ]
+        ],
+        "sam_time_s": 1.915
+      },
+      "cloud_sam_edge_read": {
+        "raw": "2",
+        "pred": "2",
+        "correct": false,
+        "vlm_time_s": 15.349,
+        "crop_size": "128x160",
+        "sam_time_s": 1.915,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "23",
+        "pred": "23",
+        "correct": true,
+        "vlm_time_s": 0.997,
+        "crop_size": "128x160",
+        "sam_time_s": 1.915,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_007.jpg",
+      "truth": "13",
+      "difficulty": "easy",
+      "sam_crop": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.129,
+        "crop_size": "12x28",
+        "sam_seg_time_s": 14.497
+      },
+      "full_image": {
+        "raw": "13",
+        "pred": "13",
+        "correct": true,
+        "vlm_time_s": 15.323
+      },
+      "grounding": {
+        "box": [
+          202,
+          391,
+          283,
+          474
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [318, 618, 445, 749]\n}\n```",
+        "ground_time_s": 86.97
+      },
+      "vlm_box": {
+        "raw": "13",
+        "pred": "13",
+        "correct": true,
+        "vlm_time_s": 15.067,
+        "crop_size": "161x165",
+        "ground_time_s": 86.97
+      },
+      "vlm_box_sam": {
+        "raw": "73",
+        "pred": "73",
+        "correct": false,
+        "vlm_time_s": 15.185,
+        "crop_size": "102x108",
+        "box_score": 0.2469,
+        "ground_time_s": 86.97
+      },
+      "muse_full": {
+        "raw": "13",
+        "pred": "13",
+        "correct": true,
+        "vlm_time_s": 1.506
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            220,
+            420,
+            264,
+            474
+          ]
+        ],
+        "sam_time_s": 1.094
+      },
+      "cloud_sam_edge_read": {
+        "raw": "13",
+        "pred": "13",
+        "correct": true,
+        "vlm_time_s": 15.288,
+        "crop_size": "92x108",
+        "sam_time_s": 1.094,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "13",
+        "pred": "13",
+        "correct": true,
+        "vlm_time_s": 1.437,
+        "crop_size": "92x108",
+        "sam_time_s": 1.094,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_008.jpg",
+      "truth": "33,32",
+      "difficulty": "medium",
+      "sam_crop": {
+        "raw": "24",
+        "pred": "24",
+        "correct": false,
+        "vlm_time_s": 15.216,
+        "crop_size": "424x456",
+        "sam_seg_time_s": 18.354
+      },
+      "full_image": {
+        "raw": "3",
+        "pred": "3",
+        "correct": false,
+        "vlm_time_s": 15.876
+      },
+      "grounding": {
+        "box": [
+          585,
+          396,
+          877,
+          808
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [300, 206, 450, 420],\n    \"label\": \"jersey number of the player whose number is most clearly visible\"\n}\n```",
+        "ground_time_s": 85.035
+      },
+      "vlm_box": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 16.124,
+        "crop_size": "584x824",
+        "ground_time_s": 85.035
+      },
+      "vlm_box_sam": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 14.927,
+        "crop_size": "397x553",
+        "box_score": 0.8089,
+        "ground_time_s": 85.035
+      },
+      "muse_full": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 2.649
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            574,
+            691,
+            788,
+            860
+          ],
+          [
+            363,
+            612,
+            507,
+            782
+          ]
+        ],
+        "sam_time_s": 1.823
+      },
+      "cloud_sam_edge_read": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 16.213,
+        "crop_size": "428x337",
+        "sam_time_s": 1.823,
+        "n_boxes": 2
+      },
+      "cloud_sam_muse": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 1.21,
+        "crop_size": "428x337",
+        "sam_time_s": 1.823,
+        "n_boxes": 2
+      }
+    },
+    {
+      "image": "img_009.jpg",
+      "truth": "34,1",
+      "difficulty": "medium",
+      "sam_crop": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 14.774,
+        "crop_size": "128x228",
+        "sam_seg_time_s": 18.761
+      },
+      "full_image": {
+        "raw": "34",
+        "pred": "34",
+        "correct": true,
+        "vlm_time_s": 14.86
+      },
+      "grounding": {
+        "box": [
+          597,
+          519,
+          672,
+          599
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [302, 260, 340, 300]\n}\n```",
+        "ground_time_s": 84.621
+      },
+      "vlm_box": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.186,
+        "crop_size": "149x160",
+        "ground_time_s": 84.621
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.26,
+        "crop_size": "117x96",
+        "box_score": 0.6172,
+        "ground_time_s": 84.621
+      },
+      "muse_full": {
+        "raw": "34",
+        "pred": "34",
+        "correct": true,
+        "vlm_time_s": 4.037
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            1075,
+            571,
+            1129,
+            614
+          ],
+          [
+            715,
+            477,
+            798,
+            546
+          ]
+        ],
+        "sam_time_s": 1.388
+      },
+      "cloud_sam_edge_read": {
+        "raw": "34",
+        "pred": "34",
+        "correct": true,
+        "vlm_time_s": 15.371,
+        "crop_size": "165x137",
+        "sam_time_s": 1.388,
+        "n_boxes": 2
+      },
+      "cloud_sam_muse": {
+        "raw": "34",
+        "pred": "34",
+        "correct": true,
+        "vlm_time_s": 1.576,
+        "crop_size": "165x137",
+        "sam_time_s": 1.388,
+        "n_boxes": 2
+      }
+    },
+    {
+      "image": "img_010.jpg",
+      "truth": "00,45",
+      "difficulty": "medium",
+      "sam_crop": {
+        "raw": "45",
+        "pred": "45",
+        "correct": true,
+        "vlm_time_s": 15.254,
+        "crop_size": "642x686",
+        "sam_seg_time_s": 17.942
+      },
+      "full_image": {
+        "raw": "15",
+        "pred": "15",
+        "correct": false,
+        "vlm_time_s": 15.312
+      },
+      "grounding": {
+        "box": [
+          418,
+          714,
+          725,
+          890
+        ],
+        "raw": "```json\n{\n  \"bbox_2d\": [200, 342, 347, 426],\n  \"label\": \"jersey number\"\n}\n```",
+        "ground_time_s": 87.401
+      },
+      "vlm_box": {
+        "raw": "00",
+        "pred": "00",
+        "correct": true,
+        "vlm_time_s": 16.221,
+        "crop_size": "613x352",
+        "ground_time_s": 87.401
+      },
+      "vlm_box_sam": {
+        "raw": "00",
+        "pred": "00",
+        "correct": true,
+        "vlm_time_s": 16.156,
+        "crop_size": "388x221",
+        "box_score": 0.8138,
+        "ground_time_s": 87.401
+      },
+      "muse_full": {
+        "raw": "00",
+        "pred": "00",
+        "correct": true,
+        "vlm_time_s": 3.862
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            710,
+            976,
+            729,
+            1096
+          ],
+          [
+            854,
+            899,
+            968,
+            1014
+          ],
+          [
+            428,
+            723,
+            616,
+            883
+          ]
+        ],
+        "sam_time_s": 2.045
+      },
+      "cloud_sam_edge_read": {
+        "raw": "00",
+        "pred": "00",
+        "correct": true,
+        "vlm_time_s": 15.316,
+        "crop_size": "376x320",
+        "sam_time_s": 2.045,
+        "n_boxes": 3
+      },
+      "cloud_sam_muse": {
+        "raw": "00",
+        "pred": "00",
+        "correct": true,
+        "vlm_time_s": 2.001,
+        "crop_size": "376x320",
+        "sam_time_s": 2.045,
+        "n_boxes": 3
+      }
+    },
+    {
+      "image": "img_011.jpg",
+      "truth": "30",
+      "difficulty": "medium",
+      "sam_crop": {
+        "raw": "30",
+        "pred": "30",
+        "correct": true,
+        "vlm_time_s": 16.11,
+        "crop_size": "224x339",
+        "sam_seg_time_s": 12.602
+      },
+      "full_image": {
+        "raw": "4",
+        "pred": "4",
+        "correct": false,
+        "vlm_time_s": 15.95
+      },
+      "grounding": {
+        "box": [
+          807,
+          904,
+          873,
+          1031
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [414, 470, 448, 536],\n    \"label\": \"jersey number of the player whose number is most clearly visible\"\n}\n```",
+        "ground_time_s": 85.11
+      },
+      "vlm_box": {
+        "raw": "2",
+        "pred": "2",
+        "correct": false,
+        "vlm_time_s": 15.522,
+        "crop_size": "132x253",
+        "ground_time_s": 85.11
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 14.815,
+        "crop_size": "87x160",
+        "box_score": 0.6278,
+        "ground_time_s": 85.11
+      },
+      "muse_full": {
+        "raw": "30",
+        "pred": "30",
+        "correct": true,
+        "vlm_time_s": 2.996
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            137,
+            1123,
+            171,
+            1177
+          ]
+        ],
+        "sam_time_s": 1.001
+      },
+      "cloud_sam_edge_read": {
+        "raw": "4",
+        "pred": "4",
+        "correct": false,
+        "vlm_time_s": 14.872,
+        "crop_size": "82x108",
+        "sam_time_s": 1.001,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "4",
+        "pred": "4",
+        "correct": false,
+        "vlm_time_s": 1.169,
+        "crop_size": "82x108",
+        "sam_time_s": 1.001,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_012.jpg",
+      "truth": "11",
+      "difficulty": "medium",
+      "sam_crop": {
+        "raw": "11",
+        "pred": "11",
+        "correct": true,
+        "vlm_time_s": 14.895,
+        "crop_size": "162x356",
+        "sam_seg_time_s": 20.957
+      },
+      "full_image": {
+        "raw": "11",
+        "pred": "11",
+        "correct": true,
+        "vlm_time_s": 14.863
+      },
+      "grounding": {
+        "box": [
+          203,
+          195,
+          305,
+          279
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [308, 300, 462, 430],\n    \"label\": \"jersey number of the player whose number is most clearly visible.\"\n}\n```",
+        "ground_time_s": 87.09
+      },
+      "vlm_box": {
+        "raw": "1",
+        "pred": "1",
+        "correct": false,
+        "vlm_time_s": 15.148,
+        "crop_size": "204x168",
+        "ground_time_s": 87.09
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 16.202,
+        "crop_size": "127x100",
+        "box_score": 0.8661,
+        "ground_time_s": 87.09
+      },
+      "muse_full": {
+        "raw": "11",
+        "pred": "11",
+        "correct": true,
+        "vlm_time_s": 2.072
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            197,
+            296,
+            233,
+            353
+          ]
+        ],
+        "sam_time_s": 0.972
+      },
+      "cloud_sam_edge_read": {
+        "raw": "11",
+        "pred": "11",
+        "correct": true,
+        "vlm_time_s": 14.957,
+        "crop_size": "84x113",
+        "sam_time_s": 0.972,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "11",
+        "pred": "11",
+        "correct": true,
+        "vlm_time_s": 1.442,
+        "crop_size": "84x113",
+        "sam_time_s": 0.972,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_013.jpg",
+      "truth": "5,7",
+      "difficulty": "hard",
+      "sam_crop": {
+        "raw": "3",
+        "pred": "3",
+        "correct": false,
+        "vlm_time_s": 15.275,
+        "crop_size": "568x244",
+        "sam_seg_time_s": 16.241
+      },
+      "full_image": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 16.005
+      },
+      "grounding": {
+        "box": [
+          369,
+          510,
+          427,
+          604
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [192, 262, 222, 310],\n    \"label\": \"jersey number of the player whose number is most clearly visible\"\n}\n```",
+        "ground_time_s": 84.451
+      },
+      "vlm_box": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 14.579,
+        "crop_size": "122x188",
+        "ground_time_s": 84.451
+      },
+      "vlm_box_sam": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 14.541,
+        "crop_size": "77x120",
+        "box_score": 0.5552,
+        "ground_time_s": 84.451
+      },
+      "muse_full": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 3.131
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            1104,
+            537,
+            1136,
+            569
+          ],
+          [
+            363,
+            584,
+            420,
+            628
+          ],
+          [
+            1262,
+            457,
+            1302,
+            520
+          ]
+        ],
+        "sam_time_s": 1.619
+      },
+      "cloud_sam_edge_read": {
+        "raw": "17",
+        "pred": "17",
+        "correct": false,
+        "vlm_time_s": 16.123,
+        "crop_size": "88x125",
+        "sam_time_s": 1.619,
+        "n_boxes": 3
+      },
+      "cloud_sam_muse": {
+        "raw": "17",
+        "pred": "17",
+        "correct": false,
+        "vlm_time_s": 6.447,
+        "crop_size": "88x125",
+        "sam_time_s": 1.619,
+        "n_boxes": 3
+      }
+    },
+    {
+      "image": "img_014.jpg",
+      "truth": "17",
+      "difficulty": "hard",
+      "sam_crop": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.296,
+        "crop_size": "264x450",
+        "sam_seg_time_s": 20.481
+      },
+      "full_image": {
+        "raw": "17",
+        "pred": "17",
+        "correct": true,
+        "vlm_time_s": 14.937
+      },
+      "grounding": {
+        "box": [
+          1027,
+          1207,
+          1083,
+          1271
+        ],
+        "raw": "```json\n{\n  \"bbox_2d\": [520, 604, 548, 636]\n}\n```",
+        "ground_time_s": 83.887
+      },
+      "vlm_box": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.189,
+        "crop_size": "120x128",
+        "ground_time_s": 83.887
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.245,
+        "crop_size": "66x80",
+        "box_score": 0.8456,
+        "ground_time_s": 83.887
+      },
+      "muse_full": {
+        "raw": "17",
+        "pred": "17",
+        "correct": true,
+        "vlm_time_s": 1.236
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            766,
+            1086,
+            926,
+            1251
+          ]
+        ],
+        "sam_time_s": 1.536
+      },
+      "cloud_sam_edge_read": {
+        "raw": "17",
+        "pred": "17",
+        "correct": true,
+        "vlm_time_s": 15.293,
+        "crop_size": "320x329",
+        "sam_time_s": 1.536,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "17",
+        "pred": "17",
+        "correct": true,
+        "vlm_time_s": 2.56,
+        "crop_size": "320x329",
+        "sam_time_s": 1.536,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_015.jpg",
+      "truth": "5",
+      "difficulty": "hard",
+      "sam_crop": {
+        "raw": "3",
+        "pred": "3",
+        "correct": false,
+        "vlm_time_s": 16.02,
+        "crop_size": "2048x1393",
+        "sam_seg_time_s": 15.581
+      },
+      "full_image": {
+        "raw": "3",
+        "pred": "3",
+        "correct": false,
+        "vlm_time_s": 15.952
+      },
+      "grounding": {
+        "box": [
+          581,
+          313,
+          654,
+          367
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [302, 164, 340, 192]\n}\n```",
+        "ground_time_s": 87.063
+      },
+      "vlm_box": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.372,
+        "crop_size": "145x118",
+        "ground_time_s": 87.063
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 14.922,
+        "crop_size": "87x64",
+        "box_score": 0.7051,
+        "ground_time_s": 87.063
+      },
+      "muse_full": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 1.36
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            1209,
+            645,
+            1264,
+            699
+          ]
+        ],
+        "sam_time_s": 2.478
+      },
+      "cloud_sam_edge_read": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 15.188,
+        "crop_size": "109x108",
+        "sam_time_s": 2.478,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "5",
+        "pred": "5",
+        "correct": true,
+        "vlm_time_s": 1.741,
+        "crop_size": "109x108",
+        "sam_time_s": 2.478,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_016.jpg",
+      "truth": "23",
+      "difficulty": "hard",
+      "sam_crop": {
+        "raw": "23",
+        "pred": "23",
+        "correct": true,
+        "vlm_time_s": 14.754,
+        "crop_size": "246x381",
+        "sam_seg_time_s": 17.736
+      },
+      "full_image": {
+        "raw": "23",
+        "pred": "23",
+        "correct": true,
+        "vlm_time_s": 16.016
+      },
+      "grounding": {
+        "box": null,
+        "raw": "There are none.",
+        "ground_time_s": 79.147
+      },
+      "muse_full": {
+        "raw": "23",
+        "pred": "23",
+        "correct": true,
+        "vlm_time_s": 1.54
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            907,
+            641,
+            984,
+            721
+          ]
+        ],
+        "sam_time_s": 0.85
+      },
+      "cloud_sam_edge_read": {
+        "raw": "3",
+        "pred": "3",
+        "correct": false,
+        "vlm_time_s": 15.083,
+        "crop_size": "153x160",
+        "sam_time_s": 0.85,
+        "n_boxes": 1
+      },
+      "cloud_sam_muse": {
+        "raw": "23",
+        "pred": "23",
+        "correct": true,
+        "vlm_time_s": 0.964,
+        "crop_size": "153x160",
+        "sam_time_s": 0.85,
+        "n_boxes": 1
+      }
+    },
+    {
+      "image": "img_017.jpg",
+      "truth": "6,30,32",
+      "difficulty": "hard",
+      "sam_crop": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.024,
+        "crop_size": "86x63",
+        "sam_seg_time_s": 17.137
+      },
+      "full_image": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 15.144
+      },
+      "grounding": {
+        "box": [
+          175,
+          343,
+          193,
+          378
+        ],
+        "raw": "```json\n{\n    \"bbox_2d\": [304, 589, 336, 650]\n}\n```",
+        "ground_time_s": 83.752
+      },
+      "vlm_box": {
+        "raw": "30",
+        "pred": "30",
+        "correct": true,
+        "vlm_time_s": 15.309,
+        "crop_size": "82x99",
+        "ground_time_s": 83.752
+      },
+      "vlm_box_sam": {
+        "raw": "10",
+        "pred": "10",
+        "correct": false,
+        "vlm_time_s": 15.621,
+        "crop_size": "20x41",
+        "box_score": 0.6522,
+        "ground_time_s": 83.752
+      },
+      "muse_full": {
+        "raw": "6",
+        "pred": "6",
+        "correct": true,
+        "vlm_time_s": 2.23
+      },
+      "cloud_sam": {
+        "boxes": [
+          [
+            360,
+            226,
+            390,
+            252
+          ],
+          [
+            177,
+            327,
+            209,
+            349
+          ],
+          [
+            247,
+            186,
+            268,
+            206
+          ]
+        ],
+        "sam_time_s": 1.003
+      },
+      "cloud_sam_edge_read": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 15.293,
+        "crop_size": "78x74",
+        "sam_time_s": 1.003,
+        "n_boxes": 3
+      },
+      "cloud_sam_muse": {
+        "raw": "32",
+        "pred": "32",
+        "correct": true,
+        "vlm_time_s": 0.974,
+        "crop_size": "78x74",
+        "sam_time_s": 1.003,
+        "n_boxes": 3
+      }
+    }
+  ]
+}
