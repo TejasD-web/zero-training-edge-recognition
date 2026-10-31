@@ -39,3 +39,4 @@ data/heldout/images/*.png
 !results/logprob_probe_*.json
 results/queue/
 !results/sync_*.jsonl
+results/uploads/
