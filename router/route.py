@@ -35,7 +35,14 @@ from benchmark import run_benchmark as rb   # edge server, reads, grounding, cro
 from router import meta_client as mc        # SAM 3.1 + Muse Spark
 from benchmark import logprob_probe as lp    # logprob query + confidence
 
-CONF_THRESHOLD = 0.9   # pre-registered in data/heldout/RUBRIC.md; do not tune on held-out results
+def _load_threshold(default=0.9):
+    """Threshold chosen on the dev set by benchmark/select_threshold.py; frozen for held-out runs."""
+    try:
+        return float(json.load(open(os.path.join(ROOT, "config", "threshold.json")))["threshold"])
+    except (OSError, KeyError, ValueError):
+        return default
+
+CONF_THRESHOLD = _load_threshold()
 QUEUE_DIR = os.path.join(rb.RESULTS_DIR, "queue")
 QUEUE_FILE = os.path.join(QUEUE_DIR, "queue.jsonl")
 
@@ -277,7 +284,7 @@ def main():
             data = json.load(f)
         if isinstance(data, dict):
             data = next(v for v in data.values() if isinstance(v, list))
-        jobs = [(os.path.join(args.image_dir, m["image"]), m.get("jersey_number")) for m in data]
+        jobs = [(os.path.join(args.image_dir, m["image"]), m.get("truth", m.get("jersey_number"))) for m in data]
     jobs += [(p, None) for p in args.images]
     if not jobs:
         ap.error("give image paths or --manifest")

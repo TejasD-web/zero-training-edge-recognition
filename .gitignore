@@ -40,3 +40,5 @@ data/heldout/images/*.png
 results/queue/
 !results/sync_*.jsonl
 results/uploads/
+!results/threshold_probe_*.json
+!results/threshold_sweep_*.png
